@@ -1,0 +1,9 @@
+package LifeRegeneration
+
+import ObjectIdGenerator
+import AbilityObjEditing
+
+public constant HARVEST_ID = compiletime(ABIL_ID_GEN.next())
+
+@compiletime function gen()
+    new AbilityDefinitionRegenLife(HARVEST_ID)

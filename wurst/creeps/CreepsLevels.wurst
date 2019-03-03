@@ -1,0 +1,47 @@
+package CreepsLevels
+
+import HashList
+import HashMap
+import Wave
+
+import Creepy
+import Zergling
+import Fulminant
+import Galoot
+import Thrower
+
+let units = new HashList<int>()
+let levelsMap = new IterableMap<int, Wave>()
+
+public function getAllUnits() returns HashList<int>
+  return units
+    ..add(CREEPY_ID)
+    ..add(ZERGLING_ID)
+    ..add(FULMINANT_ID)
+    ..add(GALOOT_ID)
+    ..add(THROWER_ID)
+
+public function getAllWaves() returns IterableMap<int, Wave>
+  return levelsMap
+    ..put(1, new Wave()..add(CREEPY_ID, 3))
+    ..put(2, new Wave()..add(CREEPY_ID, 4))
+    ..put(3, new Wave()..add(CREEPY_ID, 5))
+    ..put(4, new Wave()..add(CREEPY_ID, 6))
+    ..put(5, new Wave()..add(CREEPY_ID, 7)..add(ZERGLING_ID, 1))
+    ..put(6, new Wave()..add(CREEPY_ID, 7)..add(ZERGLING_ID, 1)..add(FULMINANT_ID, 1))
+    ..put(7, new Wave()..add(CREEPY_ID, 8)..add(ZERGLING_ID, 2)..add(FULMINANT_ID, 1))
+    ..put(8, new Wave()..add(CREEPY_ID, 8)..add(ZERGLING_ID, 2)..add(FULMINANT_ID, 1)..add(GALOOT_ID, 1))
+    ..put(9, new Wave()..add(CREEPY_ID, 9)..add(ZERGLING_ID, 3)..add(FULMINANT_ID, 1)..add(GALOOT_ID, 1))
+    ..put(10, new Wave()..add(CREEPY_ID, 9)..add(ZERGLING_ID, 3)..add(FULMINANT_ID, 2)..add(GALOOT_ID, 1))
+    ..put(11, new Wave()..add(CREEPY_ID, 10)..add(ZERGLING_ID, 4)..add(FULMINANT_ID, 2)..add(GALOOT_ID, 1))
+    ..put(12, new Wave()..add(CREEPY_ID, 10)..add(ZERGLING_ID, 4)..add(FULMINANT_ID, 2)..add(GALOOT_ID, 1)..add(THROWER_ID, 1))
+    ..put(13, new Wave()..add(CREEPY_ID, 11)..add(ZERGLING_ID, 4)..add(FULMINANT_ID, 2)..add(GALOOT_ID, 2)..add(THROWER_ID, 1))
+    ..put(14, new Wave()..add(CREEPY_ID, 11)..add(ZERGLING_ID, 4)..add(FULMINANT_ID, 3)..add(GALOOT_ID, 2)..add(THROWER_ID, 1))
+    ..put(15, new Wave()..add(CREEPY_ID, 12)..add(ZERGLING_ID, 5)..add(FULMINANT_ID, 3)..add(GALOOT_ID, 2)..add(THROWER_ID, 1))
+    ..put(16, new Wave()..add(CREEPY_ID, 12)..add(ZERGLING_ID, 5)..add(FULMINANT_ID, 3)..add(GALOOT_ID, 2)..add(THROWER_ID, 1))
+    ..put(17, new Wave()..add(CREEPY_ID, 13)..add(ZERGLING_ID, 5)..add(FULMINANT_ID, 3)..add(GALOOT_ID, 2)..add(THROWER_ID, 2))
+    ..put(18, new Wave()..add(CREEPY_ID, 13)..add(ZERGLING_ID, 5)..add(FULMINANT_ID, 4)..add(GALOOT_ID, 3)..add(THROWER_ID, 2))
+    ..put(19, new Wave()..add(CREEPY_ID, 14)..add(ZERGLING_ID, 6)..add(FULMINANT_ID, 4)..add(GALOOT_ID, 3)..add(THROWER_ID, 2))
+    ..put(20, new Wave()..add(CREEPY_ID, 14)..add(ZERGLING_ID, 6)..add(FULMINANT_ID, 4)..add(GALOOT_ID, 3)..add(THROWER_ID, 2))
+    ..put(21, new Wave()..add(CREEPY_ID, 15)..add(ZERGLING_ID, 6)..add(FULMINANT_ID, 4)..add(GALOOT_ID, 3)..add(THROWER_ID, 2))
+    ..put(22, new Wave()..add(CREEPY_ID, 15)..add(ZERGLING_ID, 6)..add(FULMINANT_ID, 5)..add(GALOOT_ID, 3)..add(THROWER_ID, 3))

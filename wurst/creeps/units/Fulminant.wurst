@@ -1,0 +1,20 @@
+package Fulminant
+
+import CreepUnit
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import Units
+
+public constant FULMINANT_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+  new CreepUnit(FULMINANT_ID, UnitIds.zombie)
+    ..setModelFile(Units.demonessBlue1)
+    ..setName("Fulminant")
+    ..setTooltipBasic("Faster and high damage creep")
+    ..setAttack(40, 10, 16, 3)
+    ..setAttack1AttackType(AttackType.Pierce)
+    ..setDefence(ArmorType.Medium, 50, 1, 1)
+    ..setGoldBounty(1, 1, 2)
+    ..setWalkSpeed(550, 400, 650)

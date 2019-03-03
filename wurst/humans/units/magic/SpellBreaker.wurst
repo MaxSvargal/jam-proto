@@ -1,0 +1,24 @@
+package SpellBreaker
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ObjectIds
+import AbilityIds
+import Abilities
+
+public constant SPELLBREAKER_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new UnitDefinition(SPELLBREAKER_ID, UnitIds.spellbreaker)
+		..setFoodCost(3)
+		..setHitPointsMaximumBase(400)
+		..setHitPointsRegenerationRate(3.0)
+		..setAttack1DamageBase(40)
+		..setArmorType(ArmorType.Medium)
+		..setAttack1AttackType(AttackType.Spells)
+		..setNormalAbilities(commaList(AbilityIds.slow))
+		..setAttack1AttackType(AttackType.Magic)
+		..setAttack1ProjectileArt(Abilities.serpentWardMissile)
+		..setAttack1Range(700)
+		..setAttack1CooldownTime(1.1)

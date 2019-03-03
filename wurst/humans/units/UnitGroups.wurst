@@ -1,0 +1,15 @@
+package UnitGroups
+
+import HashList
+
+import Rookie
+import Infantryman
+import Lieutenant
+
+public constant melleeUnits = new HashList<int>()
+  ..add(ROOKIE_ID)
+  ..add(INFANTRYMAN_ID)
+  ..add(LIEUTENANT_ID)
+
+public constant militaryUnits = new HashList<int>()
+  ..addAll(melleeUnits)

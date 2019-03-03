@@ -1,0 +1,12 @@
+package Harvest
+
+import ObjectIdGenerator
+import AbilityObjEditing
+
+public constant HARVEST_ID = compiletime(ABIL_ID_GEN.next())
+
+@compiletime function gen()
+    new AbilityDefinitionHarvest(HARVEST_ID)
+        ..presetGoldCapacity(lvl -> lvl)
+        ..presetLumberCapacity(lvl -> lvl)
+        ..setLevels(10)

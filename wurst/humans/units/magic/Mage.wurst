@@ -1,0 +1,31 @@
+package Mage
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ClosureEvents
+import ObjectIds
+import AbilityIds
+import Abilities
+
+public constant MAGE_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new UnitDefinition(MAGE_ID, UnitIds.priest)
+		..setName("Mage")
+		..setFoodCost(2)
+		..setScalingValue(1.2)
+		..setHitPointsMaximumBase(200)
+		..setHitPointsRegenerationRate(2.0)
+		..setAttack1DamageBase(20)
+		..setArmorType(ArmorType.Small)
+		..setNormalAbilities(commaList(AbilityIds.polymorph))
+		..setAttack1ProjectileArt(Abilities.faerieDragonMissile)
+		..setAttack1Range(550)
+
+init
+	EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) () ->
+		if GetTriggerUnit().getTypeId() == MAGE_ID
+			print("MAGE CREATED")
+		// print(GetTerrainType(0, 0))
+		// 1281847908 dark grass

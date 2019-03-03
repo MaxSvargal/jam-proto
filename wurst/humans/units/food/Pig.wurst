@@ -1,0 +1,14 @@
+package Pig
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+
+public constant PIG_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new UnitDefinition(PIG_ID, UnitIds.pig)
+		..setTooltipBasic("Pig produce 12 food")
+		..setBuildTime(16)
+		..setFoodProduced(12)
+		..setGoldCost(150)

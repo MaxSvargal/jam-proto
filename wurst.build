@@ -1,0 +1,9 @@
+---
+projectName: "JAM"
+dependencies:
+- "https://github.com/wurstscript/wurstStdlib2"
+buildMapData:
+  name: "JAM (Just Another Map)"
+  fileName: "JAM.w3x"
+  author: "MaxSvargal"
+  playerCount: 12

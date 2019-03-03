@@ -1,0 +1,27 @@
+package ConvertToBase
+
+import ClosureEvents
+import Assets
+
+public function addEventToConvert(int id, int baseUnit, int lvl1Unit, int lvl2Unit, int lvl3Unit)
+	EventListener.onTargetCast(id) (unit caster, unit target) ->
+		let targetTypeId = target.getTypeId()
+
+		if 	targetTypeId != baseUnit and
+				targetTypeId != lvl1Unit and
+				targetTypeId != lvl2Unit and
+				targetTypeId != lvl3Unit
+			printTimedToPlayer("|cffFF7B29 Target is not correct.", 1, caster.getOwner())
+		else
+			target.remove()
+			int unitId
+			switch (caster.getAbilityLevel(id))
+				case 3
+					unitId = lvl3Unit
+				case 2
+					unitId = lvl2Unit
+				default
+					unitId = lvl1Unit
+
+			let created = createUnit(target.getOwner(), unitId, target.getPos(), target.getFacingAngle())
+			created.addEffect(Abilities.feralspirittarget, "chest")

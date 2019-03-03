@@ -1,0 +1,60 @@
+package ContaminiumOrbs
+
+import Abilities
+import ClosureEvents
+import ClosureForGroups
+import DummyCaster
+import OrderIds
+import AbilityTooltipGenerator
+import ChannelAbilityPreset
+
+public constant CONTAMINIUM_ORBS = compiletime(ABIL_ID_GEN.next())
+constant DUMMY_SPELL = compiletime(ABIL_ID_GEN.next())
+
+constant RANGE_BASE = 400.
+constant DAMAGE_BASE = 20.
+constant ENEMIES_BASE = 4
+constant INCREASE_ENEMIES = 2
+constant RealLevelClosure COOLDOWN = lvl -> 1 / lvl + .1
+constant IntLevelClosure TARGETS_NUM = lvl -> ENEMIES_BASE + (INCREASE_ENEMIES * lvl)
+
+@compiletime function gen()
+	let tgen = new AbilityTooltipGenerator("Fire orbs to nearest enemies in range")
+	new ChannelAbilityPreset(CONTAMINIUM_ORBS, 10, true, tgen)
+		..presetTargetTypes(Targettype.PASSIVE)
+		..presetIcon("BTNPyroRod")
+		..setArtCaster(Abilities.warStompCaster)
+		..tooltipStartListen()
+		..presetHotkey("Q")
+		..setName("Contanimium Orbs")
+		..presetManaCost(lvl -> lvl * 25)
+		..presetCooldown(COOLDOWN)
+		..presetAreaofEffect(lvl -> (lvl / 2) * RANGE_BASE)
+		..addTooltipProperty("Number of targets", TARGETS_NUM)
+		..tooltipStopListen()
+
+	new AbilityDefinitionFireBolt(DUMMY_SPELL)
+		..setCooldown(1, 0)
+		..setCastRange(1, 92083)
+		..setManaCost(1, 0)
+		..presetDamage(lvl -> DAMAGE_BASE * (lvl * 2))
+		..setMissileArt(Abilities.phoenix_Missile_mini)
+		..setArtTarget(Abilities.breathOfFireDamage)
+
+init
+	EventListener.onCast(CONTAMINIUM_ORBS) (unit caster) ->
+		let abilLvl = caster.getAbilityLevel(CONTAMINIUM_ORBS)
+		let casterPos = caster.getPos()
+		let casterOwner = caster.getOwner()
+		let dummy = new DummyCaster()
+			..origin(casterPos)
+			..owner(casterOwner)
+
+		int enemiesNum = abilLvl * ENEMIES_BASE
+
+		forUnitsInRange(casterPos, abilLvl * RANGE_BASE) (unit u) ->
+			if u.getOwner().isEnemyOf(casterOwner) and u.isAlive()
+				if enemiesNum != 0
+					dummy.castTarget(DUMMY_SPELL, abilLvl, OrderIds.firebolt, u)
+					enemiesNum = enemiesNum - 1
+			return enemiesNum

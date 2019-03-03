@@ -1,0 +1,129 @@
+package Farm
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ObjectIds
+import ClosureEvents
+import TerrainUtils
+import AbilityIds
+import HashList
+
+import FarmLimitReached
+
+import Rabbit
+import Chicken
+import Pig
+import Sheep
+
+public constant FARM_ID = compiletime(UNIT_ID_GEN.next())
+public constant FARM_FULLED_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new BuildingDefinition(FARM_ID, UnitIds.farm)
+		..setName("|cff5bff29Farm")
+		..setHotkey("F")
+		..setTooltipBasic("|cffFFCC00Build |cff5bff29Farm [F]")
+		..setTooltipExtended("Farms for food")
+		..setButtonPositionX(1)
+		..setButtonPositionY(0)
+		..setSightRadiusDay(0)
+		..setSightRadiusNight(0)
+		..setBuildTime(2)
+		..setScalingValue(1.1)
+		..setUnitsTrained(commaList(RABBIT_ID, CHICKEN_ID, PIG_ID, SHEEP_ID))
+		..setFoodProduced(0)
+  	..setGoldCost(30)
+		..setLumberCost(50)
+
+	new BuildingDefinition(FARM_FULLED_ID, UnitIds.farm)
+		..setName("|cff5bff29Farm")
+		..setFoodProduced(0)
+		..setScalingValue(1.1)
+		..setNormalAbilities(commaList(FARM_LIMIT_REACHED, AbilityIds.lifeRegenerationAura, AbilityIds.manaRegenerationAura))
+
+class LimitedFarm
+	constant TRAINING_LIMIT = 5
+	protected HashList<unit> trainedUnits
+	protected unit currFarm
+	protected unit currDummy
+	protected player owner
+
+	construct(unit farm)
+		currFarm = farm
+		owner = currFarm.getOwner()
+		currDummy = createDummy()
+		trainedUnits = new HashList<unit>()
+		farm.getPos().setTerrainType(1281847908, 0, 4, 0)
+
+	function getFarm() returns unit
+		return currFarm
+
+	function isUnitBelong(unit u) returns bool
+		return trainedUnits.has(u)
+
+	function recreateFarm()
+		let pos = currFarm.getPos()
+		currFarm.remove()
+		currFarm = createUnit(owner, FARM_ID, pos, angle(270))
+
+	function createDummy() returns unit
+		currFarm.hide()
+		let dummy = createUnit(owner, FARM_FULLED_ID, currFarm.getPos(), angle(270))
+		dummy.hide()
+		currFarm.show()
+		owner.select(currFarm)
+		return dummy
+	
+	function onTrainFinish(unit trained)
+		trainedUnits.add(trained)
+		if (trainedUnits.size() >= TRAINING_LIMIT)
+			recreateFarm()
+			currFarm.hide()
+			currDummy.show()
+			owner.select(currDummy)
+
+	function onUnitDeath(unit u)
+		if (trainedUnits.has(u))
+			trainedUnits.remove(u)
+			if (trainedUnits.size() <= TRAINING_LIMIT - 1)
+				currDummy.hide()
+				currFarm.show()
+
+let farms = new HashList<LimitedFarm>()
+let foodUnits = new HashList<int>()
+
+init
+	foodUnits.add(RABBIT_ID)
+	foodUnits.add(CHICKEN_ID)
+	foodUnits.add(PIG_ID)
+	foodUnits.add(SHEEP_ID)
+
+	EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) () ->
+		let farm = GetTriggerUnit()
+		if farm.getTypeId() == FARM_ID
+			farms.add(new LimitedFarm(farm))
+
+	EventListener.add(EVENT_PLAYER_UNIT_TRAIN_FINISH) () ->
+		let farm = GetTriggerUnit()
+		let trained = GetTrainedUnit()
+
+		if foodUnits.has(trained.getTypeId())
+			for f in farms
+				if f.getFarm() == farm
+					f.onTrainFinish(trained)
+
+	EventListener.add(EVENT_PLAYER_UNIT_DEATH) () ->
+		let u = GetTriggerUnit()
+		let t = u.getTypeId()
+		
+		if (t == FARM_ID or t == FARM_FULLED_ID)
+			for f in farms
+				if (f.getFarm() == u)
+					farms.remove(f)
+					destroy f
+		else
+			if foodUnits.has(t)
+				for f in farms
+					if f.isUnitBelong(u)
+						f.onUnitDeath(u)

@@ -1,0 +1,33 @@
+package Main
+
+import BasePlayer
+import CreepsMain
+
+import GoldMine
+import TerrainUtils
+import Abilities
+
+init
+	print("Hello World")
+	FogEnable(false)
+
+	let p1 = new BasePlayer(1)
+	p1.getStatus()
+
+	let p0 = new BasePlayer(0)
+	p0.pl.setGold(999)
+	p0.pl.setLumber(999)
+	p0
+		..start()
+		..getStatus()
+
+	creepsMain()
+
+	let r = Rect(-1000, -1000, 1000, 1000)
+	addWeather(r, WeatherEffects.raysOfMoonlight)
+
+	let gp = GetUnitsOfTypeIdAll(GOLD_MINE_ID)
+	for u in gp
+		let pos = u.getPos()
+		print("TType" + pos.getTerrainType().toString())
+		flashEffect(Abilities.doomTarget, pos, 2)

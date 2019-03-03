@@ -1,0 +1,11 @@
+package Wave
+
+import HashMap
+
+public class Wave
+  protected let units = new IterableMap<int, int>
+  function add(int unitId, int number)
+    units.put(unitId, number)
+
+  function getAll() returns IterableMap<int, int>
+    return units

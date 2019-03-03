@@ -1,0 +1,29 @@
+package Rookie
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ObjectIds
+import Units
+import MelleeUnitDefinition
+
+import ContaminiumOrbs
+import FlameStorm
+
+public constant ROOKIE_ID = compiletime(HERO_ID_GEN.next())
+
+@compiletime function gen()
+	new MelleeUnitDefinition(ROOKIE_ID, UnitIds.paladin)
+		..setModelFile(Units.militia)
+		..setName("Rookie")
+		..setFoodCost(1)
+		..setAttack(AttackType.Normal, 13, 1, 2, 1.3)
+		..setDefence(ArmorType.Normal, 800, 2, 1)
+		..setStats(3, 2, 1, 2, 1, 1)
+		..setManaInitialAmount(10)
+		..setProperNames("Mike,Jason,Rocky,Herold,Arthur,Chev")
+		..setProperNamesUsed(6)
+		..setRequirements("")
+		..setHeroAbilities(commaList(CONTAMINIUM_ORBS, FLAME_STORM_ID))
+
+

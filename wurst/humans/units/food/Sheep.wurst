@@ -1,0 +1,14 @@
+package Sheep
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+
+public constant SHEEP_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+  new UnitDefinition(SHEEP_ID, UnitIds.sheep)
+    ..setTooltipBasic("Sheep produce 28 food")
+		..setBuildTime(32)
+		..setFoodProduced(28)
+		..setGoldCost(320)

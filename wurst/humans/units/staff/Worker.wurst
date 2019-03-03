@@ -1,0 +1,37 @@
+package Worker
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ObjectIds
+
+import Farm
+import Harvest
+import IncreaseHarvest
+import Repair
+import GoldMine
+import initlater HallOfFame
+import PlaceOfQuiet
+import initlater TownHall
+import initlater Bank
+
+public constant WORKER_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new UnitDefinition(WORKER_ID, UnitIds.peasant)
+		..setGoldCost(20)
+		..setBuildTime(1)
+		..setFoodCost(1)
+		..setUpgradesUsed(commaList(INCREASE_HARVEST_ID))
+		..setNormalAbilities(commaList(
+			REPAIR_HUMAN_ID,
+			HARVEST_ID
+		))
+		..setStructuresBuilt(commaList(
+			TOWN_HALL_ID,
+			FARM_ID,
+			GOLD_MINE_ID,
+			HALL_OF_FAME_ID,
+			PLACE_OF_QUIET_ID,
+			BANK_ID
+		))

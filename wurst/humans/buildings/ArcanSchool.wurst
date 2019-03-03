@@ -1,0 +1,27 @@
+package ArcanSchool
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ObjectIds
+import Buildings
+
+import DamageMagic
+import Altar
+
+public constant ARCAN_SCHOOL = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new BuildingDefinition(ARCAN_SCHOOL, UnitIds.blacksmith)
+		..setName("|cffff71f3 Arcan School")
+		..setHotkey("A")
+		..setModelFile(Buildings.arcaneVault1)
+		..setTooltipBasic("|cffFFCC00Build |cffFF7B29 Arcan School [A]")
+		..setTooltipExtended("Arcan School for mages upgrades")
+		..setButtonPositionX(2)
+		..setButtonPositionY(1)
+		..setBuildTime(3)
+		..setRequirements(commaList(ALTAR_ID))
+		..setGoldCost(250)
+		..setLumberCost(150)
+		..setResearchesAvailable(commaList(DAMAGE_MAGIC_UPGRADE_ID))

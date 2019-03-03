@@ -1,0 +1,13 @@
+package PlaceOfQuiet
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ObjectIds
+import AbilityIds
+
+public constant PLACE_OF_QUIET_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new BuildingDefinition(PLACE_OF_QUIET_ID, UnitIds.fountainofhealth)
+		..setNormalAbilities(commaList(AbilityIds.healingWardAura, AbilityIds.manaRegenerationAura))

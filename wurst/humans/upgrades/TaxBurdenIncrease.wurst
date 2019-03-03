@@ -1,0 +1,16 @@
+package TaxBurdenIncrease
+
+import UpgradeObjEditing
+import ObjectIdGenerator
+
+public constant TAX_BURDEN_INCREASE_ID = compiletime(UPGD_ID_GEN.next())
+
+@compiletime function gen()
+  new UpgradeDefinition(TAX_BURDEN_INCREASE_ID, 5)
+    ..presetIcon(lvl -> "BTNBless")
+    ..presetName(lvl -> "Tax Burden Increase")
+    ..presetTooltip(lvl -> "Research Tax Burden Increase")
+    ..presetTooltipExtended(lvl -> "Increse tax income by workers to " + (lvl + 1).toString() + " for each" )
+    ..setGoldCostBase(500)
+    ..setGoldCostIncrement(1000)
+    ..setTimeBase(5)

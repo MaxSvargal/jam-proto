@@ -1,0 +1,25 @@
+package Portal
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import Doodads
+import Abilities
+import ObjectIds
+
+import CreepHPUpgrade
+
+public constant CREEP_PORTAL_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+  new BuildingDefinition(CREEP_PORTAL_ID, UnitIds.dalaranguardtower)
+    ..setName("|cffd1114bDaemon Portal")
+    ..setAttack1DamageBase(15)
+    ..setAttack1CooldownTime(.5)
+    ..setHitPointsMaximumBase(150)
+    ..setModelFile(Doodads.shimmeringPortal)
+    ..setAttack1ProjectileArt(Abilities.sludgeMissile)
+    ..setScalingValue(1.2)
+    ..setGroundTexture("")
+    ..setIsaBuilding(false)
+    ..setUpgradesUsed(commaList(CREEP_HP_UPGRADE_ID))

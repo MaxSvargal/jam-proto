@@ -1,0 +1,46 @@
+package GoldMineAbility
+
+import ObjectIdGenerator
+import AbilityObjEditing
+
+public constant GOLD_MINE_ABILITY_ID_1 = compiletime(ABIL_ID_GEN.next())
+public constant GOLD_MINE_ABILITY_ID_2 = compiletime(ABIL_ID_GEN.next())
+public constant GOLD_MINE_ABILITY_ID_3 = compiletime(ABIL_ID_GEN.next())
+public constant GOLD_MINE_ABILITY_ID_4 = compiletime(ABIL_ID_GEN.next())
+public constant GOLD_MINE_ABILITY_ID_5 = compiletime(ABIL_ID_GEN.next())
+public constant GOLD_MINE_ABILITY_ID_6 = compiletime(ABIL_ID_GEN.next())
+public constant GOLD_MINE_ABILITY_ID_7 = compiletime(ABIL_ID_GEN.next())
+public constant GOLD_MINE_ABILITY_ID_8 = compiletime(ABIL_ID_GEN.next())
+public constant GOLD_MINE_ABILITY_ID_9 = compiletime(ABIL_ID_GEN.next())
+public constant GOLD_MINE_ABILITY_ID_10 = compiletime(ABIL_ID_GEN.next())
+public constant GOLD_MINE_ABILITY_ID_11 = compiletime(ABIL_ID_GEN.next())
+public constant GOLD_MINE_ABILITY_ID_12 = compiletime(ABIL_ID_GEN.next())
+public constant GOLD_MINE_ABILITY_ID_13 = compiletime(ABIL_ID_GEN.next())
+public constant GOLD_MINE_ABILITY_ID_14 = compiletime(ABIL_ID_GEN.next())
+public constant GOLD_MINE_ABILITY_ID_15 = compiletime(ABIL_ID_GEN.next())
+public constant GOLD_MINE_ABILITY_ID_16 = compiletime(ABIL_ID_GEN.next())
+
+public int array GOLD_MINE_ABILITY_IDS = [
+	GOLD_MINE_ABILITY_ID_1,
+	GOLD_MINE_ABILITY_ID_2,
+	GOLD_MINE_ABILITY_ID_3,
+	GOLD_MINE_ABILITY_ID_4,
+	GOLD_MINE_ABILITY_ID_5,
+	GOLD_MINE_ABILITY_ID_6,
+	GOLD_MINE_ABILITY_ID_7,
+	GOLD_MINE_ABILITY_ID_8,
+	GOLD_MINE_ABILITY_ID_9,
+	GOLD_MINE_ABILITY_ID_10,
+	GOLD_MINE_ABILITY_ID_11,
+	GOLD_MINE_ABILITY_ID_12,
+	GOLD_MINE_ABILITY_ID_13,
+	GOLD_MINE_ABILITY_ID_14,
+	GOLD_MINE_ABILITY_ID_15,
+	GOLD_MINE_ABILITY_ID_16
+]
+
+@compiletime function gen()
+	for i = 1 to 16
+		new AbilityDefinitionGoldMine(GOLD_MINE_ABILITY_IDS[i])
+			..setMaxGold(1, 1000 * i)
+			..setMiningDuration(1, .05)

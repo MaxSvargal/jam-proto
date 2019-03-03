@@ -1,0 +1,13 @@
+package FarmLimitReached
+
+import ObjectIdGenerator
+import AbilityObjEditing
+
+public constant FARM_LIMIT_REACHED = compiletime(ABIL_ID_GEN.next())
+
+@compiletime function gen()
+  new AbilityDefinitionCriticalStrikecreep(FARM_LIMIT_REACHED)
+    ..presetIcon("BTNPASRooster")
+    ..setTooltipNormal(1, "Build limit reached")
+    ..setTooltipNormalExtended(1, "Build new farms or upgrade this one")
+    ..presetButtonPosNormal(0, 0)

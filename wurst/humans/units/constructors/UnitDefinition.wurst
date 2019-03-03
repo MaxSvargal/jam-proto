@@ -1,0 +1,39 @@
+package UnitDefinition
+
+import UnitObjEditing
+
+public class UnitDefinition extends HeroDefinition
+	construct(int newId, int origId)
+		super(newId, origId)
+		hideHeroInterfaceIcon(true)
+
+	function setAttack(AttackType attackType, int damageBase, int numberofDice, int sidesperDie, real cooldownTime)
+		setAttack1AttackType(attackType)
+		setAttack1DamageBase(damageBase)
+		setAttack1DamageNumberofDice(numberofDice)
+		setAttack1DamageSidesperDie(sidesperDie)
+		setAttack1CooldownTime(cooldownTime)
+	
+	function setDefence(ArmorType armorType, int hitPoints, int defenceBase, int upgradeBonus)
+		setArmorType(armorType)
+		setHitPointsMaximumBase(hitPoints)
+		setDefenseBase(defenceBase)
+		setDefenseUpgradeBonus(upgradeBonus) // Required for defence upgrades
+
+	function setGoldBounty(int base, int numberOfDice, int sideperDie)
+		setGoldBountyAwardedBase(base)
+		setGoldBountyAwardedNumberofDice(numberOfDice)
+		setGoldBountyAwardedSidesperDie(sideperDie)
+
+	function setWalkSpeed(int base, int min, int max)
+		setSpeedBase(base)
+		setSpeedMinimum(min)
+		setSpeedMaximum(max)
+
+	function setStats(int startingStrength, int startingAgility, int startingIntelligence, real strengthPerLevel, real agilityPerLevel, real intelligencePerLevel)
+		setStartingStrength(startingStrength)
+		setStartingAgility(startingAgility)
+		setStartingIntelligence(startingIntelligence)
+		setStrengthPerLevel(strengthPerLevel)
+		setAgilityPerLevel(agilityPerLevel)
+		setIntelligencePerLevel(intelligencePerLevel)

@@ -1,0 +1,15 @@
+package Rabbit
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+
+public constant RABBIT_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+  new UnitDefinition(RABBIT_ID, UnitIds.rabbit)
+    ..setTooltipBasic("Rabbit produce 1 food")
+		..setBuildTime(4)
+		..setFoodProduced(1)
+		..setGoldCost(20)
+

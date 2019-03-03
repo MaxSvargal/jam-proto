@@ -1,0 +1,10 @@
+package Sphere
+
+import ObjectIdGenerator
+import AbilityObjEditing
+
+public constant SPHERE_ID = compiletime(ABIL_ID_GEN.next())
+
+@compiletime function gen()
+    new AbilityDefinition(SPHERE_ID, stringToIndex("Asph"))
+        ..setTargetAttachments(5)

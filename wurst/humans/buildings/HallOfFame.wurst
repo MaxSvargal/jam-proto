@@ -1,0 +1,89 @@
+package HallOfFame
+
+import ClosureTimers
+import ClosureEvents
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ObjectIds
+import Orders
+import Objects
+import Abilities
+import HashList
+import HashMap
+
+import Worker
+import HallOfFameUpgrade
+
+import Rookie
+import Infantryman
+import Lieutenant
+
+public constant HALL_OF_FAME_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new BuildingDefinition(HALL_OF_FAME_ID, UnitIds.humanbarracks)
+		..setName("|cffe63b3b Hall of Fame")
+		..setHotkey("H")
+		..setTooltipBasic("|cffFFCC00Build |cffe63b3b Hall of Fame [H]")
+		..setTooltipExtended("Hall of Fame is for upgrade workers to mellee units")
+		..setButtonPositionX(3)
+		..setButtonPositionY(1)
+		..setBuildTime(1)
+		..setRequirements("")
+		..setUnitsTrained("")
+		..setUpgradesUsed(commaList(HALL_OF_FAME_UPGRADE_ID))
+		..setUpgradesTo(commaList(HALL_OF_FAME_UPGRADE_ID))
+		..setResearchesAvailable(commaList(HALL_OF_FAME_UPGRADE_ID))
+		..setGoldCost(300)
+		..setLumberCost(250)
+
+let upgradeLevels = new HashMap<int, int>()
+let orders = new HashList<unit>()
+
+function removeUnitFromOrders(unit u)
+	if orders.has(u)
+		orders.remove(u)
+
+init
+	upgradeLevels
+		..put(0, ROOKIE_ID)
+		..put(1, INFANTRYMAN_ID)
+		..put(2, LIEUTENANT_ID)
+		..put(3, LIEUTENANT_ID)
+
+	EventListener.add(EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER) ->
+		let caster = GetTriggerUnit()
+		let target = GetOrderTargetUnit()
+
+		if caster.getTypeId() == WORKER_ID
+		and target.getTypeId() == HALL_OF_FAME_ID
+		and caster.getCurrentOrder() == Orders.smart
+			let distance = caster.getPos().distanceToSq(target.getPos())
+			let speed = caster.getMoveSpeed()
+
+			orders.add(caster)
+			doAfter(distance / speed / 1000) ->
+				if orders.has(caster)
+				and caster.getPos().distanceToSq(target.getPos()) <= 100000
+					let owner = caster.getOwner()
+					let pos = caster.getPos()
+					let angle = caster.getFacingAngle()
+					let upgradeLvl = GetPlayerTechCountSimple(HALL_OF_FAME_UPGRADE_ID, owner)
+					let upgradeTo = upgradeLevels.get(upgradeLvl)
+
+					caster.abortOrder()
+					orders.remove(caster)
+					flashEffect(Objects.uCancelDeath, pos)
+					doAfter(.5, -> caster.remove())
+					doAfter(1.5, -> flashEffect(Abilities.markOfChaosTarget, pos))
+					doAfter(2.5, -> createUnit(owner, upgradeTo, pos, angle))
+
+	EventListener.add(EVENT_PLAYER_UNIT_ISSUED_ORDER) ->
+		removeUnitFromOrders(GetTriggerUnit())
+	EventListener.add(EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER) ->
+		removeUnitFromOrders(GetTriggerUnit())
+	EventListener.add(EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER) ->
+		removeUnitFromOrders(GetTriggerUnit())
+	EventListener.add(EVENT_PLAYER_UNIT_ISSUED_UNIT_ORDER) ->
+		removeUnitFromOrders(GetTriggerUnit())

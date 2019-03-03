@@ -1,0 +1,15 @@
+package TaxLaw
+
+import UpgradeObjEditing
+import ObjectIdGenerator
+
+public constant TAX_LAW_ID = compiletime(UPGD_ID_GEN.next())
+
+@compiletime function gen()
+  new UpgradeDefinition(TAX_LAW_ID, 1)
+    ..presetIcon(lvl -> "BTNBless")
+    ..presetName(lvl -> "Tax Law")
+    ..presetTooltip(lvl -> "Research Tax Law")
+    ..presetTooltipExtended(lvl -> "Allows you to build Bank and collect taxes with workers")
+    ..setGoldCostBase(50)
+    ..setTimeBase(5)

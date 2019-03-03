@@ -1,0 +1,26 @@
+package HallOfFameUpgrade
+
+import UpgradeObjEditing
+import ObjectIdGenerator
+import Icons
+
+public constant HALL_OF_FAME_UPGRADE_ID = compiletime(UPGD_ID_GEN.next())
+
+@compiletime function gen()
+	new UpgradeDefinition(HALL_OF_FAME_UPGRADE_ID)
+		..setGoldCostBase(50)
+		..setGoldCostIncrement(50)
+		..setLumberCostBase(25)
+		..setLumberCostIncrement(25)
+		..setTimeBase(2)
+		..setTimeIncrement(2)
+		..setLevels(10)
+		..setName(1, "Upgrade to Infantryman")
+		..setName(2, "Upgrade to Lieutenant")
+		..setName(3, "Upgrade to Oberlieutenant")
+		..setIcon(1, Icons.bTNBandit)
+		..setIcon(2, Icons.bTNBanditLord)
+		..setIcon(3, Icons.bTNBanditLord)
+		..setRequirements(1, "")
+		..setRequirements(2, "")
+		..setRequirements(3, "")

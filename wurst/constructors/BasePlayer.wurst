@@ -1,0 +1,24 @@
+package BasePlayer
+
+import TownHall
+import Worker
+import Rookie
+
+public class BasePlayer
+	player pl
+	vec2 loc
+
+	construct (int p)
+		pl = Player(p)
+		loc = pl.getStartLocation()
+
+	function start()
+		createUnit(pl, TOWN_HALL_ID, loc, angle(0))
+		createUnit(pl, WORKER_ID, loc, angle(0))
+		createUnit(pl, ROOKIE_ID, loc, angle(0))//.setLevel(5, true)
+		// DefineStartLocationLoc(0, Location(0, 0))
+		// SetPlayerStartLocation(pl, 0)
+	
+	function getStatus()
+		let inGame = GetPlayerSlotState(pl)
+		print(inGame.getHandleId())

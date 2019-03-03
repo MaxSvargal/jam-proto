@@ -1,0 +1,20 @@
+package IncreaseHarvest
+
+import UpgradeObjEditing
+import ObjectIdGenerator
+
+public constant INCREASE_HARVEST_ID = compiletime(UPGD_ID_GEN.next())
+
+constant BASE_BONUS = 1
+constant INCREMENT_BONUS = 1
+
+@compiletime function gen()
+  new UpgradeDefinition(INCREASE_HARVEST_ID, 10)
+    ..presetIcon(lvl -> "BTNEquipment")
+    //..presetName(lvl -> "Increase harvest")
+    ..presetTooltip(lvl -> "Increase harvest")
+    ..presetTooltipExtended(lvl -> "Increase harvest of lamber and gold to " +(lvl * (BASE_BONUS + INCREMENT_BONUS)).toString() + " per worker")
+    ..setGoldCostBase(10)
+    ..setGoldCostIncrement(20)
+    ..addEffectGoldHarvestBonus(1, 1)
+    ..addEffectLumberHarvestBonus(1, 1)

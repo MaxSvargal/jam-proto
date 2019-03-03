@@ -1,0 +1,137 @@
+package CreepSpawn
+
+import BasePlayer
+import Portal
+import ClosureTimers
+import ClosureEvents
+import Orders
+import ClosureForGroups
+import HashMap
+import HashList
+
+import Wave
+
+import CreepHPUpgrade
+import CreepDamageUpgrade
+import CreepDefenceUpgrade
+
+import TownHall
+
+constant real SPAWN_PERIOD = 90
+
+public class CreepSpawn
+  protected IterableMap<int, Wave> levelsMap
+  protected HashList<int> units
+  protected player p
+  protected angle zeroAngle = angle(0)
+  int waveId = 0
+
+  construct()
+    let pl = new BasePlayer(11)
+    p = pl.pl
+    p.setState(PLAYER_STATE_GIVES_BOUNTY, 1)
+    startLoopForSpawn()
+    listenForDamageOfPortal()
+
+  function setUnitsHashList(HashList<int> unitsHashList)
+    units = unitsHashList
+  
+  function setLevelsMap(IterableMap<int, Wave> levelsIterableMap)
+    levelsMap = levelsIterableMap
+
+  static function getRandomLoc() returns vec2
+    let locX = GetRandomReal(-4000, 4000)
+    let locY = GetRandomReal(-4000, 4000)
+    return vec2(locX, locY)
+
+  static function checkForNearestPlayer(vec2 loc) returns boolean
+    // TODO: Make for all players
+    let plStartLoc = Player(0).getStartLocation()
+    return loc.inRange(plStartLoc, 3000)
+
+  static function getRandomOffsetOfLoc(vec2 vec) returns vec2
+    return vec.polarOffset(angle(GetRandomReal(0, 360)), GetRandomReal(50, 600))
+  
+  function makeUnit(int unitId, vec2 loc) returns unit
+    return createUnit(p, unitId, loc, zeroAngle)
+
+  function spawnPortals() returns group
+    let portals = CreateGroup()
+    let loc = getRandomLoc()
+    if (not checkForNearestPlayer(loc))
+      // for i = 0 to 1
+      //   createUnit(p, ZOMBEE_HOUSE, loc.add((400*i).toReal(), (-400*1).toReal()), zeroAngle)
+      portals.addUnit(createUnit(p, CREEP_PORTAL_ID, loc.add(400, -400), angle(150)))
+      return portals
+    else
+      return spawnPortals()
+
+  function getNearestPlayerLocation(vec2 loc) returns vec2
+    real min = 99999
+    vec2 nearest = vec2(0, 0)
+
+    for i = 12 downto 0
+      let pl = Player(i)
+      if pl.getSlotState() == PLAYER_SLOT_STATE_PLAYING
+        let pLoc = GetUnitsOfPlayerAndTypeId(pl, TOWN_HALL_ID).next().getPos()
+        // let pLoc = Player(i).getStartLocation()
+        let distance = pLoc.distanceTo(loc)
+        if distance < min
+          min = distance
+          nearest = pLoc
+    return nearest
+  
+  function upgradeUnits()
+    let techLevel = (waveId / 2).toInt()
+    SetPlayerTechResearched(p, CREEP_HP_UPGRADE_ID, techLevel)
+    SetPlayerTechResearched(p, CREEP_DEFENCE_UPGRADE_ID, techLevel)
+    SetPlayerTechResearched(p, CREEP_DAMAGE_UPGRADE_ID, techLevel)
+
+  function startLoopForSpawn()
+    doPeriodically(SPAWN_PERIOD) cb ->
+      waveId++
+      upgradeUnits()
+      let portals = spawnPortals()
+      let creeps = spawnCreepsAtAllPortals()
+      creeps.forEachIn() creep ->
+        creep.issuePointOrderById(Orders.attack, getNearestPlayerLocation(creep.getPos()))
+      
+      print("Wave " + waveId.toString() + " Spawned" + creeps.size().toString() + " creeps")
+      creeps.destr()
+      portals.destr()
+
+  function getCurrentWave() returns Wave
+    return levelsMap.hasKey(waveId)
+      ? levelsMap.get(waveId)
+      : levelsMap.get(levelsMap.size())
+
+  function spawnCreepsAtAllPortals() returns group
+    let creeps = CreateGroup()
+    let portals = GetUnitsOfTypeIdAll(CREEP_PORTAL_ID)
+
+    for p in portals
+      if p.isAlive()
+        let pos = p.getPos()
+        let spawned = spawnWaveAtLoc(pos)
+        spawned.forEachFrom(u -> creeps.addUnit(u))
+        spawned.destr()
+    return creeps
+
+  function spawnWaveAtLoc(vec2 loc) returns group
+    let wave = getCurrentWave()
+    let waveUnits = wave.getAll()
+    let creeps = CreateGroup()
+    for u in waveUnits
+      for i = 0 to waveUnits.get(u)
+        creeps.addUnit(makeUnit(u, getRandomOffsetOfLoc(loc)))
+    return creeps
+
+  function spawnRandomUnitAtPos(vec2 pos)
+    let unitId = units.get(GetRandomInt(0, units.size() - 1))
+    createUnit(p, unitId, pos, zeroAngle)
+
+  function listenForDamageOfPortal()
+    EventListener.add(EVENT_UNIT_DAMAGED) () ->
+      let tunit = GetTriggerUnit()
+      if tunit.getTypeId() == CREEP_PORTAL_ID
+        spawnRandomUnitAtPos(tunit.getPos())

@@ -1,0 +1,9 @@
+package CreepsMain
+
+import CreepSpawn
+import CreepsLevels
+
+public function creepsMain() returns CreepSpawn
+  return new CreepSpawn()
+    ..setUnitsHashList(getAllUnits())
+    ..setLevelsMap(getAllWaves())

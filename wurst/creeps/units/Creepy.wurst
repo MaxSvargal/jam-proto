@@ -1,0 +1,18 @@
+package Creepy
+
+import CreepUnit
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+
+public constant CREEPY_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+  new CreepUnit(CREEPY_ID, UnitIds.zombie)
+    ..setName("Creepy")
+    ..setTooltipBasic("Basic slow creep")
+    ..setAttack(16, 1, 5, 1.4)
+    ..setDefence(ArmorType.Unarmored, 40, 0, 1)
+    ..setGoldBounty(1, 0, 0)
+    ..setWalkSpeed(100, 90, 120)
+    ..setCollisionSize(20)

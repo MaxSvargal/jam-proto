@@ -1,0 +1,10 @@
+package Repair
+
+import ObjectIdGenerator
+import AbilityObjEditing
+
+public constant REPAIR_HUMAN_ID = compiletime(ABIL_ID_GEN.next())
+
+@compiletime function gen()
+    new AbilityDefinitionRepairHuman(REPAIR_HUMAN_ID)
+      ..setRepairCostRatio(1, .5)

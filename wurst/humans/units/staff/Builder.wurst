@@ -1,0 +1,30 @@
+package Builder
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ObjectIds
+import Units
+import Icons
+
+import WallHorizontal
+import WallVertical
+import WallTower
+import ArrowTower
+
+public constant BUILDER_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new UnitDefinition(BUILDER_ID, UnitIds.peasant)
+		..setIconGameInterface(Icons.bTNBloodElfPeasant)
+		..setModelFile(Units.highElfPeasant1)
+		..setGoldCost(50)
+		..setBuildTime(2)
+		..setFoodCost(1)
+		..setGoldBountyAwardedNumberofDice(1)
+		..setStructuresBuilt(commaList(
+			WALL_HORIZONTAL_ID,
+			WALL_VERTICAL_ID,
+			WALL_TOWER_ID,
+			ARROW_TOWER_ID
+		))

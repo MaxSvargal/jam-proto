@@ -1,0 +1,19 @@
+package Novice
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import Units
+
+public constant NOVICE_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new UnitDefinition(NOVICE_ID, UnitIds.priest)
+		..setFoodCost(1)
+		..setModelFile(Units.humanMage1)
+		..setScalingValue(1)
+		..setHitPointsMaximumBase(100)
+		..setHitPointsRegenerationRate(1.0)
+		..setAttack1DamageBase(10)
+		..setNormalAbilities("")
+		..setAttack1Range(400)

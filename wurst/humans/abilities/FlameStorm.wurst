@@ -1,0 +1,58 @@
+package FlameStorm
+
+import ClosureEvents
+import DummyCaster
+import Orders
+import AbilityTooltipGenerator
+import ChannelAbilityPreset
+
+public constant FLAME_STORM_ID = compiletime(ABIL_ID_GEN.next())
+constant DUMMY_SPELL = compiletime(ABIL_ID_GEN.next())
+
+constant RealLevelClosure COOLDOWN = lvl -> 15 / lvl + 1.5
+constant RealLevelClosure MAX_DAMAGE = lvl -> (lvl * 5) * 5.0
+constant RealLevelClosure HALF_DAMAGE = lvl -> lvl * 2.0
+constant RealLevelClosure FULL_DAMAGE = lvl -> lvl * 5.0
+constant RANGE_BASE = 800
+
+@compiletime function gen()
+  let tgen = new AbilityTooltipGenerator("Cast a few fire storms on selected radius")
+  new ChannelAbilityPreset(FLAME_STORM_ID, 10, true, tgen)
+    ..presetTargetTypes(Targettype.POINT)
+    ..tooltipStartListen()
+    ..presetHotkey("E")
+    ..setName("Flame Storm")
+    ..presetIcon("BTNTwister")
+    ..presetManaCost(lvl -> (lvl * 100 / 2).toInt())
+    ..presetAreaofEffect(lvl -> 200 * 5.0 * lvl)
+    ..addTooltipProperty("Maximum damage", MAX_DAMAGE)
+    ..presetCooldown(COOLDOWN)
+    ..presetCastRange(lvl -> 500.0 + (100 * lvl))
+    ..tooltipStopListen()
+
+  new AbilityDefinitionFlameStrikeCreep(DUMMY_SPELL)
+    ..setLevels(10)
+    ..presetMaximumDamage(MAX_DAMAGE)
+    ..presetHalfDamageDealt(HALF_DAMAGE)
+    ..presetFullDamageDealt(FULL_DAMAGE)
+    ..presetAreaofEffect(lvl -> 200)
+    ..presetCooldown(lvl -> 0)
+    ..presetCastRange(lvl -> 92083)
+    ..presetManaCost(lvl -> 0)
+    ..setRequirements("")
+
+init
+  EventListener.onPointCast(FLAME_STORM_ID) (unit caster, vec2 pos) ->
+    let abilLvl = caster.getAbilityLevel(FLAME_STORM_ID)
+    let casterOwner = caster.getOwner()
+
+    let dummy = new DummyCaster()
+      ..owner(casterOwner)
+      ..delay(10.0)
+      ..castPoint(DUMMY_SPELL, abilLvl, OrderIds.flamestrike, pos)
+      ..castPoint(DUMMY_SPELL, abilLvl, OrderIds.flamestrike, pos + vec2(200, 0))
+      ..castPoint(DUMMY_SPELL, abilLvl, OrderIds.flamestrike, pos + vec2(-200, 0))
+      ..castPoint(DUMMY_SPELL, abilLvl, OrderIds.flamestrike, pos + vec2(0, 200))
+      ..castPoint(DUMMY_SPELL, abilLvl, OrderIds.flamestrike, pos + vec2(0, -200))
+
+    destroy dummy

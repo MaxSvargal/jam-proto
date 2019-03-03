@@ -1,0 +1,11 @@
+package ArrowTower
+
+import ObjectIdGenerator
+import UnitObjEditing
+import UnitIds
+
+public constant ARROW_TOWER_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+  new BuildingDefinition(ARROW_TOWER_ID, UnitIds.guardtower)
+    ..setRequirements("")
