@@ -1,0 +1,27 @@
+package CommandCenter
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ObjectIds
+import Buildings
+
+import MilitaryTraining
+import ResearchMagic
+
+public constant COMMAND_CENTER_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new BuildingDefinition(COMMAND_CENTER_ID, UnitIds.gryphonaviary)
+		..setName("|cffFF7B29 Command Center")
+		..setHotkey("C")
+		..setTooltipBasic("|cffFFCC00Build |cffFF7B29Command Center [C]")
+		..setTooltipExtended("Main researches to open new technologies")
+		..setButtonPositionX(0)
+		..setButtonPositionY(0)
+		..setBuildTime(10)
+		..setRequirements("")
+		..setResearchesAvailable(commaList(MILITARY_TRAINING_ID, RESEARCH_MAGIC_UPGRADE_ID))
+		..setUnitsTrained("")
+		..setGoldCost(100)
+		..setLumberCost(150)

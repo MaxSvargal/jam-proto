@@ -4,19 +4,26 @@ import UnitObjEditing
 import UnitIds
 import ObjectIdGenerator
 import Units
+import Icons
+import ObjectIds
 import MelleeUnitDefinition
+
+import InfantryBerserk
+import LieutenantDefend
 
 public constant LIEUTENANT_ID = compiletime(HERO_ID_GEN.next())
 
 @compiletime function gen()
 	new MelleeUnitDefinition(LIEUTENANT_ID, UnitIds.paladin)
+		..setIconGameInterface(Icons.bTNFootman)
 		..setModelFile(Units.footman1)
 		..setName("Lieutenant")
 		..setFoodCost(3)
 		..setAttack(AttackType.Normal, 69, 3, 6, 1.3)
 		..setDefence(ArmorType.Medium, 1800, 4, 1)
-		..setStats(6, 3, 1, 3, 2, 1)
+		..setStats(6, 3, 1, 6, 3, 1)
 		..setManaInitialAmount(30)
 		..setProperNames("Mike,Jason,Rocky,Herold,Arthur,Chev")
 		..setProperNamesUsed(6)
 		..setRequirements("")
+		..setHeroAbilities(commaList(INFANTRY_BERSERK_ID, LIEUTENANT_DEFEND_ID))

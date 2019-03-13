@@ -1,0 +1,26 @@
+package ResearchMagic
+
+import UpgradeObjEditing
+import ObjectIdGenerator
+import Icons
+
+public constant RESEARCH_MAGIC_UPGRADE_ID = compiletime(UPGD_ID_GEN.next())
+
+@compiletime function gen()
+	new UpgradeDefinition(RESEARCH_MAGIC_UPGRADE_ID)
+		..setGoldCostBase(100)
+		..setGoldCostIncrement(200)
+		..setTimeBase(2)
+		..setTimeIncrement(2)
+		..setLevels(9)
+		..setName(1, "Research Magic")
+		..setName(2, "Magic lead-up research")
+		..setName(3, "Spellcast research")
+		..setName(4, "Manacast research")
+		..setName(5, "Spell support research")
+		..setIcon(1, Icons.bTNBandit)
+		..setIcon(2, Icons.bTNBanditLord)
+		..setIcon(3, Icons.bTNBanditLord)
+		..setRequirements(1, "")
+		..setRequirements(2, "")
+		..setRequirements(3, "")

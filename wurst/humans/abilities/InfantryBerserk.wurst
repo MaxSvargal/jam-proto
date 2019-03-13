@@ -1,0 +1,16 @@
+package InfantryBerserk
+
+import ObjectIdGenerator
+import AbilityObjEditing
+
+public constant INFANTRY_BERSERK_ID = compiletime(ABIL_ID_GEN.next())
+
+@compiletime function gen()
+    new AbilityDefinitionBeserk(INFANTRY_BERSERK_ID)
+      ..setLevels(50)
+      ..presetDamageTakenIncrease(lvl -> 0)
+      ..presetMovementSpeedIncrease(lvl -> (lvl * 50) /2)
+      ..presetAttackSpeedIncrease(lvl -> lvl * .2)
+      ..presetDurationHero(lvl -> lvl + 6.)
+      ..presetCooldown(lvl -> 10 - (lvl * .2))
+      ..presetManaCost(lvl -> 6 + lvl)

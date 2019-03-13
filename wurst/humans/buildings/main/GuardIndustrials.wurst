@@ -1,0 +1,23 @@
+package GuardIndustrials
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ObjectIds
+import Buildings
+
+public constant GUARD_INDUSTRIALS_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new BuildingDefinition(GUARD_INDUSTRIALS_ID, UnitIds.workshop)
+		..setName("|cffFF7B29 Guard Industrials")
+		..setHotkey("G")
+		..setTooltipBasic("|cffFFCC00Build |cffFF7B29Guard Industrials [G]")
+		..setTooltipExtended("Allows you to build defend towers and upgrade them")
+		..setButtonPositionX(0)
+		..setButtonPositionY(0)
+		..setBuildTime(10)
+    ..setRequirements("")
+    ..setResearchesAvailable("")
+		..setGoldCost(100)
+		..setLumberCost(100)

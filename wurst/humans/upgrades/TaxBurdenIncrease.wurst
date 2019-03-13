@@ -7,7 +7,7 @@ public constant TAX_BURDEN_INCREASE_ID = compiletime(UPGD_ID_GEN.next())
 
 @compiletime function gen()
   new UpgradeDefinition(TAX_BURDEN_INCREASE_ID, 5)
-    ..presetIcon(lvl -> "BTNBless")
+    ..presetIcon(lvl -> "ReplaceableTextures\\CommandButtons\\BTNIncreaseIncome")
     ..presetName(lvl -> "Tax Burden Increase")
     ..presetTooltip(lvl -> "Research Tax Burden Increase")
     ..presetTooltipExtended(lvl -> "Increse tax income by workers to " + (lvl + 1).toString() + " for each" )

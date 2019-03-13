@@ -1,0 +1,54 @@
+package GloveOfVictory
+
+import ObjectIdGenerator
+import ItemObjEditing
+import Icons
+import Abilities
+import AbilityObjEditing
+
+import ItemReciept
+import ItemDefinition
+
+import OldMerchantCape
+import RingOfLordRozen
+import GloveOfSpeed
+
+public constant GLOVE_OF_VICTORY_ID = compiletime(ITEM_ID_GEN.next())
+public constant GLOVE_OF_VICTORY_RECIEPT_ID = compiletime(ITEM_ID_GEN.next())
+public constant AURA_ID = compiletime(ITEM_ID_GEN.next())
+
+@compiletime function gen()
+	new AbilityDefinitionItemAuraTrueshot(AURA_ID)
+		..setMeleeBonus(1, true)
+		..setFlatBonus(1, true)
+		..setRangedBonus(1, true)
+		..setDamageBonus(1, 50)
+
+	new BaseItemDefinition(GLOVE_OF_VICTORY_ID, 'rst1', ItemType.EPIC)
+		..setGoldCost(500)
+		..setLumberCost(0)
+		..setStrengthBonus(40)
+		..setAttackBonus(120)
+		..setAttackSpeedIncrease(.2)
+		..addAbility(AURA_ID)
+
+		..setName("Giant Axe")
+		..setDescription("Throwable.")
+		..setTooltipBasic("Do eet")
+		..setTooltipExtended("It's a real big axe")
+		..setModelUsed(Abilities.ancestralGuardianMissile)
+		..setInterfaceIcon(Icons.bTNOrcMeleeUpThree)
+
+		..makeReciept(GLOVE_OF_VICTORY_RECIEPT_ID, 200)
+		..addRequiredItem(OLD_MERCHANT_CAPE_NAME)
+		..addRequiredItem(RING_OF_LORD_ROZEN_NAME)
+		..addRequiredItem(GLOVE_OF_SPEED_NAME)
+		..finish()
+
+init
+	new DefineItemReciept()
+		..setResultItem(GLOVE_OF_VICTORY_ID)
+		..addRequiredItem(GLOVE_OF_VICTORY_RECIEPT_ID)
+		..addRequiredItem(OLD_MERCHANT_CAPE_ID)
+		..addRequiredItem(RING_OF_LORD_ROZEN_ID)
+		..addRequiredItem(GLOVE_OF_SPEED_ID)

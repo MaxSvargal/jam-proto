@@ -1,0 +1,45 @@
+package GuildOfMagicians
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ObjectIds
+import UnitsConvertAtBuilding
+import Buildings
+import Icons
+
+import ResearchMagic
+import ArcaneAcademy
+import initlater Worker
+
+import Rookie
+import Infantryman
+import Lieutenant
+
+public constant GUILD_OF_MAGICIANS_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new BuildingDefinition(GUILD_OF_MAGICIANS_ID, UnitIds.humanbarracks)
+		..setModelFile(Buildings.arcaneObservatory1)
+		..setIconGameInterface(Icons.bTNArcaneObservatory)
+		..setName("|cffe63b3b Guild of Magicians")
+		..setHotkey("G")
+		..setTooltipBasic("|cffFFCC00Build |cffe63b3b Guild of Magicians [G]")
+		..setTooltipExtended("Guild of Magicians is for upgrade workers to magic units")
+		..setButtonPositionX(0)
+		..setButtonPositionY(0)
+		..setBuildTime(1)
+		..setRequirements(commaList(ARCANE_ACADEMY_ID))
+		..setUnitsTrained("")
+		..setResearchesAvailable(commaList(RESEARCH_MAGIC_UPGRADE_ID))
+		..setGoldCost(250)
+		..setLumberCost(200)
+		..setScalingValue(.8)
+
+init
+	new UnitsConvertAtBuilding(WORKER_ID, GUILD_OF_MAGICIANS_ID, RESEARCH_MAGIC_UPGRADE_ID)
+		..addLevel(0, ROOKIE_ID)
+		..addLevel(1, INFANTRYMAN_ID)
+		..addLevel(2, LIEUTENANT_ID)
+		..addLevel(3, LIEUTENANT_ID)
+	

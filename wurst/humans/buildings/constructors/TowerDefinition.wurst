@@ -1,0 +1,57 @@
+package TowerDefinition
+
+import UnitObjEditing
+import RegularBuildingDefinition
+
+public class TowerDefinition extends RegularBuildingDefinition
+	int damageMin
+	int damageMax
+	int damageAverage
+	real attackSpeed
+	int defenceHP
+	int defenceVal
+	int defenceValUpgrade
+
+	construct(int newId, int origId)
+		super(newId, origId)
+		setRequirements("")
+
+	function setAttack(AttackType attackType, int damageBase, int numberofDice, int sidesperDie, real cooldownTime)
+		setAttack1AttackType(attackType)
+		setAttack1DamageBase(damageBase)
+		setAttack1DamageNumberofDice(numberofDice)
+		setAttack1DamageSidesperDie(sidesperDie)
+		setAttack1CooldownTime(cooldownTime)
+		attackSpeed = cooldownTime
+		damageMin = damageBase + numberofDice
+		damageMax = damageBase + (numberofDice * sidesperDie)
+		damageAverage = ((damageMin + damageMax) / 2 / cooldownTime).toInt()
+
+	function setAttack2(AttackType attackType, int damageBase, int numberofDice, int sidesperDie, real cooldownTime)
+		setAttack2AttackType(attackType)
+		setAttack2DamageBase(damageBase)
+		setAttack2DamageNumberofDice(numberofDice)
+		setAttack2DamageSidesperDie(sidesperDie)
+		setAttack2CooldownTime(cooldownTime)
+		attackSpeed = cooldownTime
+		damageMin = damageBase + numberofDice
+		damageMax = damageBase + (numberofDice * sidesperDie)
+		damageAverage = ((damageMin + damageMax) / 2 / cooldownTime).toInt()
+	
+	function setDefence(int hitPoints, int defenceBase, int upgradeBonus)
+		setHitPointsMaximumBase(hitPoints)
+		setDefenseBase(defenceBase)
+		setDefenseUpgradeBonus(upgradeBonus) // Required for defence upgrades
+		defenceHP = hitPoints
+		defenceVal = defenceBase
+		defenceValUpgrade = upgradeBonus
+
+	function genDesc(string desc)
+		setTooltipExtended(
+			desc +
+			"\n\nDamage: " + damageMin.toString() + "-" + damageMax.toString() +
+			"\nAttack speed: " + attackSpeed.toString() +
+			"\nDPS: " + damageAverage.toString() +
+			"\n\nHP: " + defenceHP.toString() +
+			"\nDefence: " + defenceVal.toString() + " (+" + defenceValUpgrade.toString() + " per upgrade level)"
+		)

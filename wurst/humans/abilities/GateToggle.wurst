@@ -1,0 +1,43 @@
+package GateToggle
+
+import ClosureTimers
+import ClosureEvents
+import ObjectIdGenerator
+import AbilityObjEditing
+import StandardTextTags
+import Abilities
+import ObjectIds
+import BuffObjEditing
+
+import WallGate
+
+public constant GATE_TOGGLE_ID = compiletime(ABIL_ID_GEN.next())
+constant DUMMY_BUFF_ID = compiletime(BUFF_ID_GEN.next())
+
+@compiletime function gen()
+	new BuffDefinition(DUMMY_BUFF_ID, 'Basl')
+
+	new AbilityDefinitionRoar(GATE_TOGGLE_ID)
+		..setButtonPositionNormalX(2)
+		..setButtonPositionNormalY(2)
+		..setManaCost(1, 0)
+		..setBuffs(1, DUMMY_BUFF_ID.toRawCode())
+		..setArtCaster("")
+
+init
+	EventListener.onCast(GATE_TOGGLE_ID) u ->
+		u.remove() // TODO: maybe fix that to store in local variables
+		let newOne = createUnit(
+			u.getOwner(),
+			u.getTypeId() != WALL_GATE_ID
+				? WALL_GATE_ID
+				: WALL_GATE_OPEN_ID,
+			u.getPos(),
+			u.getFacingAngle()
+		)
+			..setHP(u.getHP())
+
+		if u.getTypeId() != WALL_GATE_OPEN_ID
+			newOne.setAnimation("death alternate")
+
+		u.getOwner().selectSingle(newOne)

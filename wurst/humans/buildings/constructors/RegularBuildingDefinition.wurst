@@ -1,0 +1,37 @@
+package RegularBuildingDefinition
+
+import UnitObjEditing
+import HashMap
+
+public let buildings = new HashMap<int, Building>()
+
+public class Building
+  int id
+  int goldCost
+  int lumberCost
+  construct(int id)
+    this.id = id
+
+  function setGoldCost(int data)
+    goldCost = data
+
+  function setLumberCost(int data)
+    lumberCost = data
+
+
+public class RegularBuildingDefinition extends BuildingDefinition
+  Building building
+
+  construct(int newId, int origId)
+    super(newId, origId)
+    building = new Building(newId)
+    buildings.put(newId, building)
+    print("building added")
+
+  override function setGoldCost(int data)
+    super.setGoldCost(data)
+    building.setGoldCost(data)
+
+  override function setLumberCost(int data)
+    super.setLumberCost(data)
+    building.setLumberCost(data)

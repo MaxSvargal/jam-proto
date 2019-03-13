@@ -1,0 +1,42 @@
+package MilitaryTraining
+
+import UpgradeObjEditing
+import ObjectIdGenerator
+import ObjectIds
+import Icons
+
+import UpgradeWeapons
+import UpgradeArmor
+import UpgradeStrength
+import UpgradeHaste
+
+public constant MILITARY_TRAINING_ID = compiletime(UPGD_ID_GEN.next())
+
+@compiletime function gen()
+  new UpgradeDefinition(MILITARY_TRAINING_ID, 6)
+    ..setTimeBase(10)
+    ..setTimeIncrement(5)
+    ..setIcon(1, "ReplaceableTextures\\CommandButtons\\BTNGondorFootman")
+    ..setIcon(2, Icons.bTNMassTeleport)
+    ..setIcon(3, "ReplaceableTextures\\CommandButtons\\BTNCallingHowl")
+    ..setIcon(4, "ReplaceableTextures\\CommandButtons\\BTNCallingHowl")
+    ..setName(1, "Military Training")
+    ..setName(2, "Military Education")
+    ..setName(3, "Military Tactic")
+    ..setName(4, "Military Strategy")
+    ..setTooltip(1, "Military Training")
+    ..setTooltip(2, "Military Education")
+    ..setTooltip(3, "Military Tactic")
+    ..setTooltip(4, "Military Strategy")
+    ..setTooltipExtended(1, "Enable to build Arcenal and make military mellee units")
+    ..setTooltipExtended(2, "Enable to upgrade mellee units to infantryman")
+    ..setTooltipExtended(3, "Enable to upgrade mellee units to Lieutenant")
+    ..setTooltipExtended(4, "")
+    ..setGoldCostBase(50)
+    ..setGoldCostIncrement(150)
+    ..setRequirements(2, commaList(UPGRADE_WEAPONS_ID, UPGRADE_ARMOR_ID))
+    ..setRequirementsLevels(2, "1,1")
+    ..setRequirements(3, commaList(UPGRADE_WEAPONS_ID, UPGRADE_ARMOR_ID, UPGRADE_STRENGTH_ID))
+    ..setRequirementsLevels(3, "3,3,1")
+    ..setRequirements(4, commaList(UPGRADE_WEAPONS_ID, UPGRADE_ARMOR_ID, UPGRADE_STRENGTH_ID, UPGRADE_HASTE_ID))
+    ..setRequirementsLevels(4, "6,6,3,1")

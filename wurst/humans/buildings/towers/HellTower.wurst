@@ -1,0 +1,49 @@
+package HellTower
+
+import Abilities
+import AbilityObjEditing
+import ObjectIdGenerator
+import UnitIds
+import ObjectIds
+import ClosureEvents
+import HashMap
+
+import TowerDefinition
+
+public constant HELL_TOWER_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new TowerDefinition(HELL_TOWER_ID, UnitIds.cannontower)
+		..setModelFile("HumanTowers.mdx")
+		..setRequiredAnimationNames(commaList("upgrade", "fourth"))
+		..setAttack1ProjectileArt(Abilities.demolisherFireMissile)
+		//..setBuildTime(8)
+		..setBuildTime(1)
+		..setGoldCost(900)
+		..setLumberCost(300)
+		..setAttack(AttackType.Chaos, 750, 5, 80, .9)
+		..setAttacksEnabled(1)
+		..setDefence(50000, 9, 3)
+		..genDesc("Advanced pierce tower")
+		..setScalingValue(1.1)
+		..setTintingColorRed(255)
+		..setTintingColorGreen(100)
+		..setTintingColorBlue(100)
+		..setButtonPositionX(0)
+		..setButtonPositionY(2)
+
+init
+	let effects = new HashMap<unit, effect>
+
+	EventListener.add(EVENT_PLAYER_UNIT_UPGRADE_FINISH) () ->
+		let u = GetTriggerUnit()
+		if u.getTypeId() == HELL_TOWER_ID
+			let ef = addEffect(Abilities.lavaSpawnMissile, GetTriggerUnit().getPos3Real().add(0, 0, 250))..setScale(2.5)
+			effects.put(u, ef)
+	
+	EventListener.add(EVENT_PLAYER_UNIT_DEATH) () ->
+		let u = GetTriggerUnit()
+		if u.getTypeId() == HELL_TOWER_ID and effects.has(u)
+			let ef = effects.get(u)
+			effects.remove(u)
+			ef.destr()

@@ -1,0 +1,23 @@
+package ArrowTower
+
+import ObjectIdGenerator
+import UnitObjEditing
+import UnitIds
+import ObjectIds
+
+import TowerDefinition
+import AdwancedArrowTower
+
+public constant ARROW_TOWER_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new TowerDefinition(ARROW_TOWER_ID, UnitIds.guardtower)
+		..setModelFile("HumanTowers.mdx")
+		..setRequiredAnimationNames("")
+		..setBuildTime(4)
+		..setGoldCost(50)
+		..setLumberCost(35)
+		..setAttack(AttackType.Pierce, 27, 2, 5, 1.3)
+		..setDefence(5000, 5, 2)
+		..setUpgradesTo(commaList(ADVANCED_ARROW_TOWER_ID))
+		..genDesc("Basic pierce tower")

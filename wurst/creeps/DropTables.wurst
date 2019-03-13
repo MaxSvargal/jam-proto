@@ -1,0 +1,21 @@
+package DropTables
+
+import DropTable
+
+import FireCore
+import GloveOfSpeed
+import MarvelousStone
+import OrcAxe
+import RingOfStrength
+import OldMerchantCape
+
+public constant commonDropTable = new DropTable()
+  ..addDropItem(FIRE_CORE_ID)
+  ..addDropItem(GLOVE_OF_SPEED_ID)
+  ..addDropItem(MARVELOUS_STONE_ID)
+  ..addDropItem(ORC_AXE_ID)
+  ..addDropItem(RING_OF_STRENGTH_ID)
+  ..addDropItem(OLD_MERCHANT_CAPE_ID)
+  ..addDropNothing()
+  ..addDropNothing()
+  ..addDropNothing()

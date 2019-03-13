@@ -1,0 +1,38 @@
+package RuneOfFire
+
+import ObjectIdGenerator
+import ItemObjEditing
+import Icons
+import ItemReciept
+
+import ItemDefinition
+
+import FireCore
+import MarvelousStone
+
+public constant RUNE_OF_FIRE_ID = compiletime(ITEM_ID_GEN.next())
+public constant RUNE_OF_FIRE_RECIEPT_ID = compiletime(ITEM_ID_GEN.next())
+public constant RUNE_OF_FIRE_NAME = "Rune of Fire"
+
+@compiletime function gen()
+	new BaseItemDefinition(RUNE_OF_FIRE_ID, 'rst1', ItemType.UNCOMMON)
+		..setGoldCost(120)
+		..setLumberCost(0)
+    ..setAttackBonus(25)
+    // TODO: Add fire effect
+		..setName(RUNE_OF_FIRE_NAME)
+		..setDescription("")
+		..setTooltipBasic("Basic Tooltip")
+		..setTooltipExtended("Extended Tooltip")
+    ..setInterfaceIcon(Icons.bTNGlyph)
+    
+		..makeReciept(RUNE_OF_FIRE_RECIEPT_ID, 10, false)
+		..addRequiredItem(RUNE_OF_FIRE_NAME)
+		..addRequiredItem(MARVELOUS_STONE_NAME)
+		..finish()
+
+init
+  new DefineItemReciept()
+    ..setResultItem(RUNE_OF_FIRE_ID)
+    ..addRequiredItem(FIRE_CORE_ID)
+    ..addRequiredItem(MARVELOUS_STONE_ID)

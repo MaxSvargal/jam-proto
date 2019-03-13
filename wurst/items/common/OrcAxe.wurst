@@ -1,0 +1,21 @@
+package OrcAxe
+
+import ObjectIdGenerator
+import ItemObjEditing
+import Icons
+
+import ItemDefinition
+
+public constant ORC_AXE_ID = compiletime(ITEM_ID_GEN.next())
+public constant ORC_AXE_NAME = "Ork Axe"
+
+@compiletime function gen()
+	new BaseItemDefinition(ORC_AXE_ID, 'rst1', ItemType.COMMON)
+		..setGoldCost(60)
+		..setLumberCost(0)
+		..setAttackBonus(20)
+		..setName(ORC_AXE_NAME)
+		..setDescription("Realy big orc axe. it can hardly be raised.")
+		..setTooltipBasic("Basic Tooltip")
+		..setTooltipExtended("Extended Tooltip")
+		..setInterfaceIcon(Icons.bTNOrcMeleeUpOne)

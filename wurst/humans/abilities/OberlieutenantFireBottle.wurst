@@ -1,0 +1,13 @@
+package OberlieutenantFireBottle
+
+import ObjectIdGenerator
+import AbilityObjEditing
+import Abilities
+
+public constant OBERLIEUTENANT_FIRE_BOTTLE_ID = compiletime(ABIL_ID_GEN.next())
+
+@compiletime function gen()
+    new AbilityDefinitionAlchemistAcidBomb(OBERLIEUTENANT_FIRE_BOTTLE_ID)
+      ..setLevels(50)
+      ..presetManaCost(lvl -> 10 + lvl)
+      ..setMissileArt(Abilities.demolisherFireMissile)

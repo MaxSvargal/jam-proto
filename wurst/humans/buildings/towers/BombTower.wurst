@@ -1,0 +1,27 @@
+package BombTower
+
+import AbilityObjEditing
+import ObjectIdGenerator
+import UnitIds
+import ObjectIds
+
+import TowerDefinition
+import HellTower
+
+public constant BOMB_TOWER_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new TowerDefinition(BOMB_TOWER_ID, UnitIds.cannontower)
+		..setModelFile("HumanTowers.mdx")
+		..setRequiredAnimationNames(commaList("upgrade", "fourth"))
+		// ..setBuildTime(7)
+		..setBuildTime(1)
+		..setGoldCost(350)
+		..setLumberCost(200)
+		..setAttack(AttackType.Siege, 400, 4, 100, 1)
+		..setAttacksEnabled(1)
+		..setDefence(25000, 9, 3)
+		..setUpgradesTo(commaList(HELL_TOWER_ID))
+		..genDesc("Advanced pierce tower")
+		..setButtonPositionX(0)
+		..setButtonPositionY(2)

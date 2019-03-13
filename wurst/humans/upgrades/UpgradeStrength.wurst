@@ -1,0 +1,29 @@
+package UpgradeStrength
+
+import UpgradeObjEditing
+import ObjectIdGenerator
+
+public constant UPGRADE_STRENGTH_ID = compiletime(UPGD_ID_GEN.next())
+
+constant BASE_BONUS = .1
+constant INCREMENT_BONUS = .1
+
+function getTierIcon(int lvl) returns string
+	return "ReplaceableTextures\\CommandButtons\\BTNStrengthTier" + lvl.toString()
+
+@compiletime function gen()
+	new UpgradeDefinition(UPGRADE_STRENGTH_ID)
+		..setLevels(60)
+		..presetIcon(lvl -> (
+			(lvl <= 10 ? getTierIcon(1) :
+			(lvl <= 30 ? getTierIcon(2) :
+			getTierIcon(3)
+		))))
+		..presetName(lvl -> "Upgrade Strength level " + lvl.toString())
+		..presetTooltip(lvl -> "Upgrade Strength level " + lvl.toString())
+		..presetTooltipExtended(lvl -> "Increase percent of hit points of mellee units to " + ((BASE_BONUS + (INCREMENT_BONUS * (lvl - 1))) * 100).toString() + "%")
+		..setGoldCostBase(50)
+		..setGoldCostIncrement(50)
+		..setTimeBase(5)
+		..setTimeIncrement(2)
+		..addEffectHitPointBonusPercent(BASE_BONUS, INCREMENT_BONUS)

@@ -1,0 +1,53 @@
+package DropTable
+
+import ClosureEvents
+import HashList
+import LinkedList
+
+public class DropTable
+	LinkedList<group> sourceGroups = new LinkedList<group>()
+	HashList<int> items = new HashList<int>()
+
+	construct()
+		EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
+			let u = GetTriggerUnit()
+			if u.getOwner() == players[11]
+				let findedGroup = findGroupByUnit(u)
+				if findedGroup != null
+					if getAliveUnitsNumOfGroup(findedGroup) == 0
+						let itemId = getRandomItem()
+						if itemId != 0
+							createItem(itemId, u.getPos())
+						sourceGroups.remove(findedGroup)
+						findedGroup.destr()
+
+	protected function findGroupByUnit(unit u) returns group
+		group findedGroup = null
+		let iterator = sourceGroups.iterator()
+		for grp from iterator
+			if grp.contains(u)
+				findedGroup = grp
+		iterator.close()
+		return findedGroup
+
+	protected function getAliveUnitsNumOfGroup(group g) returns int
+		int isAlivedUnitsOfGroupNum = 0
+		let groupIterator = g.iterator()
+		for un from groupIterator
+			if un.isAlive()
+				isAlivedUnitsOfGroupNum++
+		groupIterator.close()
+		return isAlivedUnitsOfGroupNum
+
+	protected function getRandomItem() returns int
+		let i = GetRandomInt(0, items.size())
+		return items.get(i)
+
+	function addSourceUnitGroup(group g)
+		sourceGroups.add(g)
+
+	function addDropItem(int itemId)
+		items.add(itemId)
+
+	function addDropNothing()
+		items.add(0)

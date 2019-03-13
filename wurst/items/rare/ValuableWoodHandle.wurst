@@ -1,0 +1,20 @@
+package ValuableWoodHandle
+
+import ObjectIdGenerator
+import ItemObjEditing
+
+import ItemDefinition
+
+public constant VALUABLE_WOOD_HANDLE_ID = compiletime(ITEM_ID_GEN.next())
+public constant VALUABLE_WOOD_HANDLE_NAME = "Valuable Wood Handle"
+
+@compiletime function gen()
+	new BaseItemDefinition(VALUABLE_WOOD_HANDLE_ID, ItemType.RARE)
+		..setGoldCost(120)
+		..setLumberCost(0)
+		..setAttackBonus(40)
+		..setName(VALUABLE_WOOD_HANDLE_NAME)
+		..setDescription("Usable handle for some weapon")
+		..setTooltipBasic("Basic Tooltip")
+		..setTooltipExtended("Extended Tooltip")
+		..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNBloodthirster")

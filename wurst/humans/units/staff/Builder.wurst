@@ -9,8 +9,14 @@ import Icons
 
 import WallHorizontal
 import WallVertical
-import WallTower
+import WallGate
 import ArrowTower
+import MagicTower
+
+import BombTower
+import HellTower
+
+import GuardIndustrials
 
 public constant BUILDER_ID = compiletime(UNIT_ID_GEN.next())
 
@@ -22,9 +28,13 @@ public constant BUILDER_ID = compiletime(UNIT_ID_GEN.next())
 		..setBuildTime(2)
 		..setFoodCost(1)
 		..setGoldBountyAwardedNumberofDice(1)
+		// ..setRequirements(commaList(GUARD_INDUSTRIALS_ID))
 		..setStructuresBuilt(commaList(
 			WALL_HORIZONTAL_ID,
 			WALL_VERTICAL_ID,
-			WALL_TOWER_ID,
-			ARROW_TOWER_ID
+			WALL_GATE_ID,
+			ARROW_TOWER_ID,
+			MAGIC_TOWER_ID,
+			BOMB_TOWER_ID,
+			HELL_TOWER_ID
 		))

@@ -1,0 +1,23 @@
+package MagicTower
+
+import ObjectIdGenerator
+import UnitObjEditing
+import UnitIds
+import ObjectIds
+
+import TowerDefinition
+import ResearchMagic
+
+public constant MAGIC_TOWER_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new TowerDefinition(MAGIC_TOWER_ID, UnitIds.elvenguardtower)
+		..setBuildTime(6)
+		..setGoldCost(50)
+		..setLumberCost(100)
+		..setAttack(AttackType.Magic, 38, 6, 6, .9)
+		..setDefence(2500, 9, 3)
+    ..setRequirements(commaList(RESEARCH_MAGIC_UPGRADE_ID))
+		..genDesc("Basic magic tower")
+		..setButtonPositionX(0)
+		..setButtonPositionY(2)

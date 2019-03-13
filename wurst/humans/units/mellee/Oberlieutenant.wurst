@@ -1,0 +1,30 @@
+package Oberlieutenant
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import Units
+import Icons
+import ObjectIds
+import MelleeUnitDefinition
+
+import InfantryBerserk
+import LieutenantDefend
+import OberlieutenantFireBottle
+
+public constant OBERLIEUTENANT_ID = compiletime(HERO_ID_GEN.next())
+
+@compiletime function gen()
+	new MelleeUnitDefinition(OBERLIEUTENANT_ID, UnitIds.paladin)
+		..setIconGameInterface(Icons.bTNTheCaptain)
+		..setModelFile(Units.theCaptain1)
+		..setName("Oberlieutenant")
+		..setFoodCost(4)
+		..setAttack(AttackType.Normal, 147, 5, 8, 1.2)
+		..setDefence(ArmorType.Medium, 2700, 6, 1)
+		..setStats(10, 5, 3, 6, 3, 1)
+		..setManaInitialAmount(50)
+		..setProperNames("Mike,Jason,Rocky,Herold,Arthur,Chev")
+		..setProperNamesUsed(6)
+		..setRequirements("")
+		..setHeroAbilities(commaList(INFANTRY_BERSERK_ID, LIEUTENANT_DEFEND_ID, OBERLIEUTENANT_FIRE_BOTTLE_ID))

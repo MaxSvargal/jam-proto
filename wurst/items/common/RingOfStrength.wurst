@@ -1,0 +1,21 @@
+package RingOfStrength
+
+import ObjectIdGenerator
+import ItemObjEditing
+import Icons
+
+import ItemDefinition
+
+public constant RING_OF_STRENGTH_ID = compiletime(ITEM_ID_GEN.next())
+public constant RING_OF_STRENGTH_NAME = "Ring of Strength"
+
+@compiletime function gen()
+	new BaseItemDefinition(RING_OF_STRENGTH_ID, 'rst1', ItemType.COMMON)
+		..setGoldCost(50)
+		..setLumberCost(0)
+		..setStrengthBonus(10)
+		..setName(RING_OF_STRENGTH_NAME)
+		..setDescription("Strong solid ring")
+		..setTooltipBasic("Basic Tooltip")
+		..setTooltipExtended("Extended Tooltip")
+		..setInterfaceIcon(Icons.bTNGoldRing)

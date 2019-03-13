@@ -1,0 +1,43 @@
+package Sell
+
+import ClosureTimers
+import ClosureEvents
+import ObjectIdGenerator
+import AbilityObjEditing
+import StandardTextTags
+import Abilities
+import ObjectIds
+import BuffObjEditing
+
+import RegularBuildingDefinition
+
+public constant SELL_ID = compiletime(ABIL_ID_GEN.next())
+public constant DUMMY_BUFF_ID = compiletime(BUFF_ID_GEN.next())
+
+@compiletime function gen()
+	new BuffDefinition(DUMMY_BUFF_ID, 'Basl')
+
+	new AbilityDefinitionRoar(SELL_ID)
+		..setButtonPositionNormalX(2)
+		..setButtonPositionNormalY(2)
+		..setManaCost(1, 0)
+		..setBuffs(1, DUMMY_BUFF_ID.toRawCode())
+		..setArtCaster("")
+
+init
+	EventListener.onCast(SELL_ID) u ->
+		let tp = u.getTypeId()
+		if buildings.has(tp)
+			let building = buildings.get(tp)
+			let gold = (building.goldCost * 0.75).toInt()
+			let lumber = (building.lumberCost * 0.75).toInt()
+			let owner = u.getOwner()
+			owner.addGold(gold)
+			owner.addLumber(lumber)
+			flashEffect(Abilities.pileofGold, u.getPos(), 1, angle(0))
+			createGoldBountyTextTag(u, gold, owner)
+			doAfter(.75, () -> begin
+				createLumberBountyTextTag(u, lumber, owner)
+				u.remove()
+			end)
+

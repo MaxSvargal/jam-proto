@@ -1,0 +1,30 @@
+package ArcaneAcademy
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ObjectIds
+import Buildings
+import Icons
+
+import DamageMagic
+import ResearchMagic
+
+public constant ARCANE_ACADEMY_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new BuildingDefinition(ARCANE_ACADEMY_ID, UnitIds.blacksmith)
+		..setIconGameInterface(Icons.bTNArcaneSanctum)
+		..setModelFile(Buildings.arcaneSanctum1)
+		..setName("|cffff71f3 Arcane Academy")
+		..setHotkey("A")
+		..setTooltipBasic("|cffFFCC00Build |cffFF7B29 Arcane Academy [A]")
+		..setTooltipExtended("Arcane Academy for make upgrades for magic unis")
+		..setButtonPositionX(0)
+		..setButtonPositionY(0)
+		..setBuildTime(5)
+		..setRequirements("")
+		..setGoldCost(200)
+		..setLumberCost(150)
+		..setResearchesAvailable(commaList(DAMAGE_MAGIC_UPGRADE_ID))
+		..setRequirements(commaList(RESEARCH_MAGIC_UPGRADE_ID))

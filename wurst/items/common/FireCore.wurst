@@ -1,0 +1,20 @@
+package FireCore
+
+import ObjectIdGenerator
+import ItemObjEditing
+import Icons
+
+import ItemDefinition
+
+public constant FIRE_CORE_ID = compiletime(ITEM_ID_GEN.next())
+public constant FIRE_CORE_NAME = "Fire Core"
+
+@compiletime function gen()
+	new BaseItemDefinition(FIRE_CORE_ID, 'rst1', ItemType.COMMON)
+		..setGoldCost(40)
+		..setLumberCost(20)
+		..setName(FIRE_CORE_NAME)
+		..setDescription("Realy big orc axe. it can hardly be raised.")
+		..setTooltipBasic("Basic Tooltip")
+		..setTooltipExtended("Extended Tooltip")
+		..setInterfaceIcon(Icons.bTNOrcMeleeUpOne)

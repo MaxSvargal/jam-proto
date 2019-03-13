@@ -1,0 +1,26 @@
+package MilitaryTower
+
+import AbilityObjEditing
+import ObjectIdGenerator
+import UnitIds
+import ObjectIds
+
+import TowerDefinition
+import BombTower
+
+constant MULTIPLE_SHOT_ID = compiletime(ABIL_ID_GEN.next())
+public constant MILITARY_TOWER_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new TowerDefinition(MILITARY_TOWER_ID, UnitIds.guardtower)
+		..setModelFile("HumanTowers.mdx")
+		..setRequiredAnimationNames(commaList("upgrade", "third"))
+		..setBuildTime(7)
+		..setGoldCost(350)
+		..setLumberCost(200)
+		..setAttack(AttackType.Pierce, 250, 4, 50, 1)
+		..setDefence(20000, 9, 3)
+		..setUpgradesTo(commaList(BOMB_TOWER_ID))
+		..genDesc("Advanced pierce tower")
+		..setButtonPositionX(0)
+		..setButtonPositionY(2)

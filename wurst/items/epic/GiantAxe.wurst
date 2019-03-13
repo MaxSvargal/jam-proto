@@ -1,0 +1,44 @@
+package GiantAxe
+
+import ObjectIdGenerator
+import ItemObjEditing
+import Icons
+import Abilities
+
+import ItemReciept
+import ItemDefinition
+
+import OrcAxe
+import RingOfStrength
+import ValuableWoodHandle
+
+public constant GIANT_AXE_ID = compiletime(ITEM_ID_GEN.next())
+public constant GIANT_AXE_RECIEPT_ID = compiletime(ITEM_ID_GEN.next())
+
+@compiletime function gen()
+	new BaseItemDefinition(GIANT_AXE_ID, 'rst1', ItemType.EPIC)
+		..setGoldCost(600)
+		..setLumberCost(0)
+		..setStrengthBonus(40)
+		..setAttackBonus(90)
+		..setAttackSpeedIncrease(.05)
+		..setName("Giant Axe")
+		..setDescription("Throwable.")
+		..setTooltipBasic("Do eet")
+		..setTooltipExtended("It's a real big axe")
+		..setModelUsed(Abilities.ancestralGuardianMissile)
+		..setInterfaceIcon(Icons.bTNOrcMeleeUpThree)
+
+		..makeReciept(GIANT_AXE_RECIEPT_ID, 200)
+		..addRequiredItem(ORC_AXE_NAME)
+		..addRequiredItem(RING_OF_STRENGTH_NAME)
+		..addRequiredItem(VALUABLE_WOOD_HANDLE_NAME)
+		..finish()
+
+init
+	new DefineItemReciept()
+		..setResultItem(GIANT_AXE_ID)
+		..addRequiredItem(GIANT_AXE_RECIEPT_ID)
+		..addRequiredItem(ORC_AXE_ID)
+		..addRequiredItem(RING_OF_STRENGTH_ID)
+		..addRequiredItem(VALUABLE_WOOD_HANDLE_ID)

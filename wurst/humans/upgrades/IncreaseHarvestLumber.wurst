@@ -1,0 +1,25 @@
+package IncreaseHarvestLumber
+
+import UpgradeObjEditing
+import ObjectIdGenerator
+
+public constant INCREASE_HARVEST_LUMBER_ID = compiletime(UPGD_ID_GEN.next())
+
+constant BASE_BONUS = 1
+constant INCREMENT_BONUS = 1
+
+@compiletime function gen()
+  new UpgradeDefinition(INCREASE_HARVEST_LUMBER_ID, 10)
+    ..presetIcon(lvl -> "ReplaceableTextures\\CommandButtons\\BTNWoodcutting")
+    ..presetName(lvl -> "Increase harvest of lumber")
+    ..presetTooltip(lvl -> "Research Increase harvest of lumber")
+    ..presetTooltipExtended(lvl -> "Increase harvest of lumber to " +(BASE_BONUS + INCREMENT_BONUS).toString() + " per worker")
+    ..setGoldCostBase(80)
+    ..setGoldCostIncrement(80)
+    ..setLumberCostBase(20)
+    ..setLumberCostIncrement(30)
+    ..addEffectLumberHarvestBonus(BASE_BONUS, INCREMENT_BONUS)
+    ..setButtonPositionX(2)
+    ..setButtonPositionY(1)
+    ..setTimeBase(5)
+    ..setTimeIncrement(5)

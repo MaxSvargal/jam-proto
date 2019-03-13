@@ -1,0 +1,20 @@
+package BaseUpgradeDefinition
+
+import UnitDefinition
+import ObjectIds
+
+import HeroGlow
+
+import CreepDamageUpgrade
+import CreepHPUpgrade
+import CreepDefenceUpgrade
+
+public class MelleeUnitDefinition extends UnitDefinition
+	construct(int newId, int origId)
+		super(newId, origId)
+		setUpgradesUsed(commaList(
+			CREEP_DAMAGE_UPGRADE_ID,
+			CREEP_DEFENCE_UPGRADE_ID,
+			CREEP_HP_UPGRADE_ID
+		))
+		setNormalAbilities(commaList(HERO_GLOW_ID))

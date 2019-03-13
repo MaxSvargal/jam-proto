@@ -1,0 +1,34 @@
+package Arsenal
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ObjectIds
+
+import UpgradeWeapons
+import UpgradeArmor
+import UpgradeStrength
+import UpgradeHaste
+import MilitaryTraining
+
+public constant ARSENAL_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new BuildingDefinition(ARSENAL_ID, UnitIds.blacksmith)
+		..setName("|cffFF7B29 Arsenal")
+		..setHotkey("T")
+		..setTooltipBasic("|cffFFCC00Build |cffFF7B29Arsenal [A]")
+		..setTooltipExtended("Arsenal for make upgrades for mellee units")
+		..setButtonPositionX(0)
+		..setButtonPositionY(0)
+		..setBuildTime(5)
+		..setRequirements("")
+		..setResearchesAvailable(commaList(
+			UPGRADE_WEAPONS_ID,
+			UPGRADE_ARMOR_ID,
+			UPGRADE_STRENGTH_ID,
+			UPGRADE_HASTE_ID
+		))
+		..setRequirements(commaList(MILITARY_TRAINING_ID))
+		..setGoldCost(200)
+		..setLumberCost(150)

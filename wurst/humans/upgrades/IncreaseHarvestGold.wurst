@@ -1,0 +1,25 @@
+package IncreaseHarvestGold
+
+import UpgradeObjEditing
+import ObjectIdGenerator
+
+public constant INCREASE_HARVEST_GOLD_ID = compiletime(UPGD_ID_GEN.next())
+
+constant BASE_BONUS = 1
+constant INCREMENT_BONUS = 1
+
+@compiletime function gen()
+  new UpgradeDefinition(INCREASE_HARVEST_GOLD_ID, 10)
+    ..presetIcon(lvl -> "ReplaceableTextures\\CommandButtons\\BTNIncome")
+    ..presetName(lvl -> "Increase harvest of gold")
+    ..presetTooltip(lvl -> "Research Increase harvest of gold")
+    ..presetTooltipExtended(lvl -> "Increase harvest of gold to " +(BASE_BONUS + INCREMENT_BONUS).toString() + " per worker")
+    ..setGoldCostBase(100)
+    ..setGoldCostIncrement(100)
+    ..setLumberCostBase(10)
+    ..setLumberCostIncrement(20)
+    ..addEffectGoldHarvestBonus(BASE_BONUS, INCREMENT_BONUS)
+    ..setButtonPositionX(1)
+    ..setButtonPositionY(1)
+    ..setTimeBase(5)
+    ..setTimeIncrement(5)

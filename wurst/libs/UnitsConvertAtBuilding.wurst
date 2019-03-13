@@ -1,0 +1,74 @@
+package UnitsConvertAtBuilding
+
+import ClosureTimers
+import ClosureEvents
+import HashMap
+import HashList
+import Orders
+import Objects
+import Abilities
+
+public class UnitsConvertAtBuilding
+	let upgradeLevels = new HashMap<int, int>()
+	let orders = new HashList<unit>()
+	int convertedUnitId
+	int convertBuildingId
+	int upgradeId
+
+	construct(int convertedUnitId, int convertBuildingId, int upgradeId)
+		this.convertedUnitId = convertedUnitId
+		this.convertBuildingId = convertBuildingId
+		this.upgradeId = upgradeId
+
+		EventListener.add(EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER) ->
+			let caster = GetTriggerUnit()
+			let target = GetOrderTargetUnit()
+			removeUnitFromOrders(caster)
+			onUnitIssuedOrder(caster, target)
+
+		EventListener.add(EVENT_PLAYER_UNIT_ISSUED_ORDER) ->
+			removeUnitFromOrders(GetTriggerUnit())
+
+		EventListener.add(EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER) ->
+			removeUnitFromOrders(GetTriggerUnit())
+			
+		EventListener.add(EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER) ->
+			removeUnitFromOrders(GetTriggerUnit())
+
+		EventListener.add(EVENT_PLAYER_UNIT_ISSUED_UNIT_ORDER) ->
+			removeUnitFromOrders(GetTriggerUnit())
+
+	function addLevel(int lvl, int unitId)
+		upgradeLevels.put(lvl, unitId)
+
+	function removeUnitFromOrders(unit u)
+		if orders.has(u)
+			orders.remove(u)
+
+	function onUnitIssuedOrder(unit caster, unit target)
+		if caster.getTypeId() == convertedUnitId
+		and target.getTypeId() == convertBuildingId
+		and (
+			caster.getCurrentOrder() == Orders.smart
+			or caster.getCurrentOrder() == Orders.repair
+		)
+			let casterPos = caster.getPos()
+			let targetPos = target.getPos()
+			let distance = casterPos.distanceToSq(targetPos)
+			let speed = caster.getMoveSpeed()
+
+			orders.add(caster)
+			doAfter(distance / speed / 1000) ->
+				if orders.has(caster)
+				and casterPos.distanceToSq(targetPos) <= 100000
+					let owner = caster.getOwner()
+					let angle = caster.getFacingAngle()
+					let upgradeLvl = GetPlayerTechCountSimple(upgradeId, owner)
+					let upgradeTo = upgradeLevels.get(upgradeLvl)
+
+					caster.abortOrder()
+					orders.remove(caster)
+					flashEffect(Objects.uCancelDeath, casterPos)
+					doAfter(.5, -> caster.remove())
+					doAfter(1.5, -> flashEffect(Abilities.markOfChaosTarget, casterPos))
+					doAfter(2.5, -> createUnit(owner, upgradeTo, casterPos, angle))

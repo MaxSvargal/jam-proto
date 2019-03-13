@@ -42,5 +42,5 @@ public int array GOLD_MINE_ABILITY_IDS = [
 @compiletime function gen()
 	for i = 1 to 16
 		new AbilityDefinitionGoldMine(GOLD_MINE_ABILITY_IDS[i])
-			..setMaxGold(1, 1000 * i)
-			..setMiningDuration(1, .05)
+			..setMaxGold(1, 500 * i)
+			..setMiningDuration(1, i * 0.01)

@@ -1,0 +1,25 @@
+package ScoutTower
+
+import ObjectIdGenerator
+import initlater UnitObjEditing
+import UnitIds
+import ObjectIds
+
+import TowerDefinition
+import MilitaryTower
+
+public constant SCOUT_TOWER_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new TowerDefinition(SCOUT_TOWER_ID, UnitIds.guardtower)
+		..setModelFile("HumanTowers.mdx")
+		..setRequiredAnimationNames(commaList("upgrade", "second"))
+		..setBuildTime(6)
+		..setGoldCost(200)
+		..setLumberCost(140)
+		..setAttack(AttackType.Pierce, 110, 3, 55, 1.1)
+		..setDefence(12000, 8, 3)
+		..setUpgradesTo(commaList(MILITARY_TOWER_ID))
+		..genDesc("Advanced pierce tower")
+		..setButtonPositionX(0)
+		..setButtonPositionY(2)

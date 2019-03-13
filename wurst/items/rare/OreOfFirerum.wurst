@@ -1,0 +1,20 @@
+package OreOfFirerum
+
+import ObjectIdGenerator
+import ItemObjEditing
+
+import ItemDefinition
+
+public constant ORE_OF_FIREREUM_ID = compiletime(ITEM_ID_GEN.next())
+public constant ORE_OF_FIREREUM_NAME = "Ore of Firerum"
+
+@compiletime function gen()
+	new BaseItemDefinition(ORE_OF_FIREREUM_ID, ItemType.RARE)
+		..setGoldCost(100)
+		..setLumberCost(0)
+		..setName(ORE_OF_FIREREUM_NAME)
+		..setDescription("")
+		..setTooltipBasic("Basic Tooltip")
+		..setTooltipExtended("Core of fire elementals")
+		..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNFlamechantedOre")
+ 

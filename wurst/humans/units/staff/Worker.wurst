@@ -5,14 +5,21 @@ import UnitIds
 import ObjectIdGenerator
 import ObjectIds
 
-import Farm
-import Harvest
-import IncreaseHarvest
+import IncreaseHarvestGold
+import IncreaseHarvestLumber
 import Repair
+import Harvest
+
+import Farm
 import GoldMine
-import initlater HallOfFame
-import PlaceOfQuiet
+import Storehouse
+import CommandCenter
+import Arsenal
+import ArcaneAcademy
+import GuildOfMagicians
+import GuardIndustrials
 import initlater TownHall
+import initlater HallOfFame
 import initlater Bank
 
 public constant WORKER_ID = compiletime(UNIT_ID_GEN.next())
@@ -22,16 +29,26 @@ public constant WORKER_ID = compiletime(UNIT_ID_GEN.next())
 		..setGoldCost(20)
 		..setBuildTime(1)
 		..setFoodCost(1)
-		..setUpgradesUsed(commaList(INCREASE_HARVEST_ID))
 		..setNormalAbilities(commaList(
 			REPAIR_HUMAN_ID,
 			HARVEST_ID
 		))
+		..setUpgradesUsed(commaList(
+			INCREASE_HARVEST_GOLD_ID,
+			INCREASE_HARVEST_LUMBER_ID
+		))
 		..setStructuresBuilt(commaList(
 			TOWN_HALL_ID,
 			FARM_ID,
+			STOREHOUSE_ID,
 			GOLD_MINE_ID,
+
+			BANK_ID,
+			COMMAND_CENTER_ID,
+			ARSENAL_ID,
+			ARCANE_ACADEMY_ID,
+
 			HALL_OF_FAME_ID,
-			PLACE_OF_QUIET_ID,
-			BANK_ID
+			GUILD_OF_MAGICIANS_ID,
+			GUARD_INDUSTRIALS_ID
 		))

@@ -3,14 +3,18 @@ package HallOfFameUpgrade
 import UpgradeObjEditing
 import ObjectIdGenerator
 import Icons
+import ObjectIds
+
+import MilitaryTraining
 
 public constant HALL_OF_FAME_UPGRADE_ID = compiletime(UPGD_ID_GEN.next())
 
+// TODO: Make variocity tree of unit upgrades
 @compiletime function gen()
 	new UpgradeDefinition(HALL_OF_FAME_UPGRADE_ID)
-		..setGoldCostBase(50)
-		..setGoldCostIncrement(50)
-		..setLumberCostBase(25)
+		..setGoldCostBase(100)
+		..setGoldCostIncrement(200)
+		..setLumberCostBase(50)
 		..setLumberCostIncrement(25)
 		..setTimeBase(2)
 		..setTimeIncrement(2)
@@ -18,9 +22,11 @@ public constant HALL_OF_FAME_UPGRADE_ID = compiletime(UPGD_ID_GEN.next())
 		..setName(1, "Upgrade to Infantryman")
 		..setName(2, "Upgrade to Lieutenant")
 		..setName(3, "Upgrade to Oberlieutenant")
+		..setTooltip(1, "Upgrade Rookie to Infantryman")
+		..setTooltip(2, "Upgrade Infantryman to Lieutenant")
+		..setTooltip(3, "Upgrade Lieutenant to Oberlieutenant")
 		..setIcon(1, Icons.bTNBandit)
-		..setIcon(2, Icons.bTNBanditLord)
+		..setIcon(2, Icons.bTNFootman)
 		..setIcon(3, Icons.bTNBanditLord)
-		..setRequirements(1, "")
-		..setRequirements(2, "")
-		..setRequirements(3, "")
+		..presetRequirements(lvl -> commaList(MILITARY_TRAINING_ID))
+		..presetRequirementsLevels(lvl -> (lvl + 1).toString())

@@ -1,0 +1,31 @@
+package UpgradeArmor
+
+import UpgradeObjEditing
+import ObjectIdGenerator
+
+public constant UPGRADE_ARMOR_ID = compiletime(UPGD_ID_GEN.next())
+
+constant BASE_BONUS = 10
+constant INCREMENT_BONUS = 15
+
+function getTierIcon(int lvl) returns string
+	return "ReplaceableTextures\\CommandButtons\\BTNArmorTier" + lvl.toString()
+
+@compiletime function gen()
+	new UpgradeDefinition(UPGRADE_ARMOR_ID)
+		..setLevels(60)
+		..presetIcon(lvl -> (
+			(lvl <= 10 ? getTierIcon(1) :
+			(lvl <= 20 ? getTierIcon(2) :
+			(lvl <= 30 ? getTierIcon(3) :
+			(lvl <= 40 ? getTierIcon(4) :
+			getTierIcon(5)
+		))))))
+		..presetName(lvl -> "Upgrade Armor level " + lvl.toString())
+		..presetTooltip(lvl -> "Upgrade Armor level " + lvl.toString())
+		..presetTooltipExtended(lvl -> "Increase defence of mellee units based on its stats")
+		..setGoldCostBase(40)
+		..setGoldCostIncrement(40)
+		..addEffectApplyDefenseUpgradeBonus()
+		..setTimeBase(5)
+		..setTimeIncrement(2)

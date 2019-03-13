@@ -1,0 +1,30 @@
+package UpgradeHaste
+
+import UpgradeObjEditing
+import ObjectIdGenerator
+
+public constant UPGRADE_HASTE_ID = compiletime(UPGD_ID_GEN.next())
+
+constant BASE_BONUS = .1
+constant INCREMENT_BONUS = .1
+
+function getTierIcon(int lvl) returns string
+	return "ReplaceableTextures\\CommandButtons\\BTNHasteTier" + lvl.toString()
+
+@compiletime function gen()
+	new UpgradeDefinition(UPGRADE_HASTE_ID)
+		..setLevels(50)
+		..presetIcon(lvl -> (
+			(lvl <= 10 ? getTierIcon(1) :
+			(lvl <= 25 ? getTierIcon(2) :
+			(lvl <= 40 ? getTierIcon(3) :
+			getTierIcon(4)
+		)))))
+		..presetName(lvl -> "Upgrade Haste level " + lvl.toString())
+		..presetTooltip(lvl -> "Upgrade Haste level " + lvl.toString())
+		..presetTooltipExtended(lvl -> "Increase attack speed of mellee units to " + ((BASE_BONUS + (INCREMENT_BONUS * (lvl - 1))) * 100).toString() + "%")
+		..setGoldCostBase(50)
+		..setGoldCostIncrement(50)
+		..setTimeBase(5)
+		..setTimeIncrement(2)
+		..addEffectAttackSpeedBonus(BASE_BONUS, INCREMENT_BONUS)

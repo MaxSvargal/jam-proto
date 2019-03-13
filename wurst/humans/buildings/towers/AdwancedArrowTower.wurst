@@ -1,0 +1,25 @@
+package AdwancedArrowTower
+
+import ObjectIdGenerator
+import UnitObjEditing
+import UnitIds
+import ObjectIds
+
+import TowerDefinition
+import ScoutTower
+
+public constant ADVANCED_ARROW_TOWER_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new TowerDefinition(ADVANCED_ARROW_TOWER_ID, UnitIds.guardtower)
+		..setModelFile("HumanTowers.mdx")
+		..setRequiredAnimationNames(commaList("upgrade", "first"))
+		..setBuildTime(5)
+		..setGoldCost(100)
+		..setLumberCost(70)
+		..setAttack(AttackType.Pierce, 103, 3, 10, 1.2)
+		..setDefence(8000, 6, 2)
+		..setUpgradesTo(commaList(SCOUT_TOWER_ID))
+		..genDesc("Advanced pierce tower")
+		..setButtonPositionX(0)
+		..setButtonPositionY(2)

@@ -1,0 +1,22 @@
+package RingOfLordRozen
+
+import ObjectIdGenerator
+import ItemObjEditing
+import Icons
+
+import ItemDefinition
+
+public constant RING_OF_LORD_ROZEN_ID = compiletime(ITEM_ID_GEN.next())
+public constant RING_OF_LORD_ROZEN_NAME = "Ring of Lord Rozen"
+
+@compiletime function gen()
+	new BaseItemDefinition(RING_OF_LORD_ROZEN_ID, ItemType.RARE)
+		..setGoldCost(100)
+		..setLumberCost(0)
+		..setAttackBonus(60)
+		..setLifeRegenerationIncrease(.5)
+		..setName(RING_OF_LORD_ROZEN_NAME)
+		..setDescription("")
+		..setTooltipBasic("Basic Tooltip")
+		..setTooltipExtended("")
+		..setInterfaceIcon(Icons.bTNRingLionHead)

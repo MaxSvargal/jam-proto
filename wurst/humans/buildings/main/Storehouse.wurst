@@ -1,0 +1,25 @@
+package Storehouse
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ObjectIds
+import Buildings
+
+public constant STOREHOUSE_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new BuildingDefinition(STOREHOUSE_ID, UnitIds.humanlumbermill)
+		..setModelFile(Buildings.grainWarehouse)
+		..setName("|cffFF7B29 Storehouse")
+		..setHotkey("S")
+		..setTooltipBasic("|cffFFCC00Build |cffFF7B29Storehousel [S]")
+		..setTooltipExtended("Depot for store gold and lamber")
+		..setButtonPositionX(0)
+		..setButtonPositionY(0)
+		..setBuildTime(10)
+		..setRequirements("")
+		..setNormalAbilities(commaList("Argl"))
+		..setGoldCost(50)
+		..setLumberCost(75)
+		..setShadowImageCenterY(.8)

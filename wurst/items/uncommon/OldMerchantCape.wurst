@@ -1,0 +1,20 @@
+package OldMerchantCape
+
+import ObjectIdGenerator
+import ItemObjEditing
+
+import ItemDefinition
+
+public constant OLD_MERCHANT_CAPE_ID = compiletime(ITEM_ID_GEN.next())
+public constant OLD_MERCHANT_CAPE_NAME = "Old Merchant Cape"
+
+@compiletime function gen()
+	new BaseItemDefinition(OLD_MERCHANT_CAPE_ID, 'rst1', ItemType.UNCOMMON)
+		..setGoldCost(120)
+		..setLumberCost(0)
+		// TODO: Add increase damage aura
+		..setName(OLD_MERCHANT_CAPE_NAME)
+		..setDescription("")
+		..setTooltipBasic("Basic Tooltip")
+		..setTooltipExtended("Extended Tooltip")
+		..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNINV_Misc_Cape_07")

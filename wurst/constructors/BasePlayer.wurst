@@ -3,6 +3,15 @@ package BasePlayer
 import TownHall
 import Worker
 import Rookie
+import Oberlieutenant
+
+import OrcAxe
+import RingOfStrength
+import GiantAxe
+import ValuableWoodHandle
+import OreOfFirerum
+import FireCore
+import MarvelousStone
 
 public class BasePlayer
 	player pl
@@ -15,9 +24,16 @@ public class BasePlayer
 	function start()
 		createUnit(pl, TOWN_HALL_ID, loc, angle(0))
 		createUnit(pl, WORKER_ID, loc, angle(0))
-		createUnit(pl, ROOKIE_ID, loc, angle(0))//.setLevel(5, true)
+		createUnit(pl, OBERLIEUTENANT_ID, loc, angle(0)).setLevel(5, true)
 		// DefineStartLocationLoc(0, Location(0, 0))
 		// SetPlayerStartLocation(pl, 0)
+		createItem(ORC_AXE_ID, loc)
+		createItem(RING_OF_STRENGTH_ID, loc)
+		createItem(VALUABLE_WOOD_HANDLE_ID, loc)
+		createItem(GIANT_AXE_RECIEPT_ID, loc)
+		createItem(ORE_OF_FIREREUM_ID, loc)
+		createItem(FIRE_CORE_ID, loc)
+		createItem(MARVELOUS_STONE_ID, loc)
 	
 	function getStatus()
 		let inGame = GetPlayerSlotState(pl)

@@ -1,0 +1,14 @@
+package HeroGlow
+
+import ObjectIdGenerator
+import AbilityObjEditing
+
+public constant HERO_GLOW_ID = compiletime(ABIL_ID_GEN.next())
+
+@compiletime function gen()
+  new AbilityDefinitionAuraSlow(HERO_GLOW_ID)
+    ..setMovementSpeedFactor(1, 0)
+    ..setAttackSpeedFactor(1, 0)
+    ..setAreaofEffect(1, 1)
+    ..setBuffs(1, "")
+    ..setArtTarget("Aura.mdx")

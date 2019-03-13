@@ -1,0 +1,16 @@
+package LieutenantDefend
+
+import ObjectIdGenerator
+import AbilityObjEditing
+
+public constant LIEUTENANT_DEFEND_ID = compiletime(ABIL_ID_GEN.next())
+
+@compiletime function gen()
+    new AbilityDefinitionDefend(LIEUTENANT_DEFEND_ID)
+      ..setLevels(50)
+      ..presetManaCost(lvl -> 5 + lvl)
+      ..presetDamageTaken(lvl -> .5 - (lvl * .05))
+      ..presetChancetoDeflect(lvl -> 19. + lvl)
+      ..presetMovementSpeedFactor(lvl -> .2 + (lvl * .05))
+      ..presetAttackSpeedFactor(lvl -> lvl * 0.05)
+      ..setRequirements("")

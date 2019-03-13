@@ -1,0 +1,19 @@
+package GloveOfSpeed
+
+import ObjectIdGenerator
+import ItemObjEditing
+
+import ItemDefinition
+
+public constant GLOVE_OF_SPEED_ID = compiletime(ITEM_ID_GEN.next())
+public constant GLOVE_OF_SPEED_NAME = "Glove of Speed"
+
+@compiletime function gen()
+	new BaseItemDefinition(GLOVE_OF_SPEED_ID, 'rst1', ItemType.COMMON)
+		..setGoldCost(50)
+		..setAttackSpeedIncrease(.05)
+		..setName(GLOVE_OF_SPEED_NAME)
+		..setDescription("Realy big orc axe. it can hardly be raised.")
+		..setTooltipBasic("Basic Tooltip")
+		..setTooltipExtended("Extended Tooltip")
+		..setIcon("BTNHasteTier1")

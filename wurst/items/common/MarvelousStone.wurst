@@ -1,0 +1,20 @@
+package MarvelousStone
+
+import ObjectIdGenerator
+import ItemObjEditing
+import Icons
+
+import ItemDefinition
+
+public constant MARVELOUS_STONE_ID = compiletime(ITEM_ID_GEN.next())
+public constant MARVELOUS_STONE_NAME = "Marvelous Stone"
+
+@compiletime function gen()
+	new BaseItemDefinition(MARVELOUS_STONE_ID, 'rst1', ItemType.COMMON)
+		..setGoldCost(30)
+		..setLumberCost(15)
+		..setName(MARVELOUS_STONE_NAME)
+		..setDescription("")
+		..setTooltipBasic("Basic Tooltip")
+		..setTooltipExtended("So beatiful stone, looks like a gem.")
+		..setIcon("BTNGemStone")

@@ -1,0 +1,40 @@
+package HallOfFame
+
+import UnitObjEditing
+import UnitIds
+import ObjectIdGenerator
+import ObjectIds
+
+import Worker
+import HallOfFameUpgrade
+import Arsenal
+import UnitsConvertAtBuilding
+
+import Rookie
+import Infantryman
+import Lieutenant
+
+public constant HALL_OF_FAME_ID = compiletime(UNIT_ID_GEN.next())
+
+@compiletime function gen()
+	new BuildingDefinition(HALL_OF_FAME_ID, UnitIds.humanbarracks)
+		..setName("|cffe63b3b Hall of Fame")
+		..setHotkey("H")
+		..setTooltipBasic("|cffFFCC00Build |cffe63b3b Hall of Fame [H]")
+		..setTooltipExtended("Hall of Fame is for upgrade workers to mellee units")
+		..setButtonPositionX(0)
+		..setButtonPositionY(0)
+		..setBuildTime(1)
+		..setRequirements(commaList(ARSENAL_ID))
+		..setUnitsTrained("")
+		..setResearchesAvailable(commaList(HALL_OF_FAME_UPGRADE_ID))
+		..setGoldCost(250)
+		..setLumberCost(200)
+		..setScalingValue(1.2)
+
+init
+	new UnitsConvertAtBuilding(WORKER_ID, HALL_OF_FAME_ID, HALL_OF_FAME_UPGRADE_ID)
+		..addLevel(0, ROOKIE_ID)
+		..addLevel(1, INFANTRYMAN_ID)
+		..addLevel(2, LIEUTENANT_ID)
+		..addLevel(3, LIEUTENANT_ID)

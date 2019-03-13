@@ -1,0 +1,31 @@
+package UpgradeWeapons
+
+import UpgradeObjEditing
+import ObjectIdGenerator
+
+public constant UPGRADE_WEAPONS_ID = compiletime(UPGD_ID_GEN.next())
+
+constant BASE_BONUS = 10
+constant INCREMENT_BONUS = 15
+
+function getTierIcon(int lvl) returns string
+	return "ReplaceableTextures\\CommandButtons\\BTNWeaponsTier" + lvl.toString()
+
+@compiletime function gen()
+	new UpgradeDefinition(UPGRADE_WEAPONS_ID)
+		..setLevels(60)
+		..presetIcon(lvl -> (
+			(lvl <= 10 ? getTierIcon(1) :
+			(lvl <= 20 ? getTierIcon(2) :
+			(lvl <= 30 ? getTierIcon(3) :
+			(lvl <= 40 ? getTierIcon(4) :
+			getTierIcon(5)
+		))))))
+		..presetName(lvl -> "Upgrade Weapons level " + lvl.toString())
+		..presetTooltip(lvl -> "Upgrade Weapons level " + lvl.toString())
+		..presetTooltipExtended(lvl -> "Increase damage of mellee units to " + (BASE_BONUS + (INCREMENT_BONUS * (lvl - 1))).toString())
+		..setGoldCostBase(40)
+		..setGoldCostIncrement(40)
+		..addEffectAttackDamageBonus(BASE_BONUS, INCREMENT_BONUS)
+		..setTimeBase(5)
+		..setTimeIncrement(2)
